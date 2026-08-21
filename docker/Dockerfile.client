@@ -75,6 +75,8 @@ COPY <<'EOF' /entrypoint.sh
 # Генерирует рантайм-конфиг клиента из переменных окружения при старте контейнера
 set -e
 
+mkdir -p /usr/share/nginx/html/configs
+
 cat > /usr/share/nginx/html/configs/app-config.js <<CONFIG
 // Сгенерировано entrypoint-ом контейнера при запуске
 window.__APP_CONFIG__ = {

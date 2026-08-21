@@ -48,8 +48,6 @@ services:
       # === Redirects / CORS ===
       FRONTEND_URL: ${FRONTEND_URL:-https://${DOMAIN_CLIENT:-trick-surf.limited-dissolve.ru}}
       CORS_EXTRA_ORIGINS: ${CORS_EXTRA_ORIGINS:-}
-    volumes:
-      - ./public:/app/apps/server/public
     networks:
       - prod-net
     deploy:
@@ -76,8 +74,6 @@ services:
 
       # === APM (signoz) ===
       OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT:-}
-    volumes:
-      - ./configs:/usr/share/nginx/html/configs
     networks:
       - prod-net
     deploy:

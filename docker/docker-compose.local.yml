@@ -53,8 +53,6 @@ services:
       # === Redirects / CORS ===
       FRONTEND_URL: "http://localhost:3334"
       CORS_EXTRA_ORIGINS: ${CORS_EXTRA_ORIGINS:-}
-    volumes:
-      - ./public:/app/apps/server/public
 
   trick-surf-client:
     build:
@@ -74,8 +72,6 @@ services:
 
       # === APM (signoz) ===
       OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT:-}
-    volumes:
-      - ./configs:/usr/share/nginx/html/configs
     depends_on:
       - trick-surf-server
 

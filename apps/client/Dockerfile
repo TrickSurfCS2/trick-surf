@@ -1,30 +1,96 @@
-# ---- Node modules ----- #
-FROM oven/bun AS node_modules
+# syntax=docker/dockerfile:1
+# =================================================================
+# Этап 1: "builder" - Установка зависимостей и сборка клиента
+# =================================================================
+FROM oven/bun:1.4-slim AS builder
 
-WORKDIR /opt/app
+WORKDIR /usr/src/app
 
-COPY ./package*.json ./bun* .
+COPY package.json bun.lock ./
+COPY apps/client/package.json ./apps/client/
 
 RUN bun install --ignore-scripts
 
-# ---- Build ------------ #
-FROM node:20.9.0-bullseye-slim AS dist
-
-WORKDIR /opt/app
-
-COPY --from=node_modules /opt/app/node_modules ./node_modules
+# Copy all source files
 COPY . .
 
-RUN npm run lint
-RUN npm run build
+ARG V_CLIENT="dev"
+ENV VITE_APP_VERSION=$V_CLIENT
 
-# ---- Release ---------- #
-FROM gcr.io/distroless/nodejs20-debian12
+RUN bun --cwd=apps/client run build
 
-WORKDIR /opt/app
+# =================================================================
+# Этап 2: "release" - Создание финального образа с Nginx
+# =================================================================
+FROM nginx:stable-alpine
 
-COPY --from=dist /opt/app/dist-client dist-client
-COPY --from=dist /opt/app/dist-server/server.cjs server.cjs
+COPY --from=builder /usr/src/app/apps/client/dist /usr/share/nginx/html
 
-ENV HOST 0.0.0.0
-CMD ["server.cjs"]
+COPY <<'EOF' /etc/nginx/conf.d/default.conf
+server {
+    listen 3334;
+    server_name localhost;
+    client_max_body_size 5G;
+
+    root /usr/share/nginx/html;
+    index index.html;
+
+    # --- Сжатие GZIP ---
+    gzip on;
+    gzip_vary on;
+    gzip_min_length 1024;
+    gzip_types text/plain text/css text/xml text/javascript application/x-javascript application/xml+rss application/javascript application/json image/svg+xml;
+
+    # --- PWA Service Worker ---
+    location = /sw.js {
+        add_header Cache-Control "no-cache, must-revalidate, proxy-revalidate, max-age=0";
+        expires off;
+    }
+
+    # --- Статика Vite ---
+    location /assets/ {
+        expires 1y;
+        add_header Cache-Control "public, max-age=31536000, immutable";
+        access_log off;
+        try_files $uri =404;
+    }
+
+    # --- Конфиги приложения ---
+    location /configs/ {
+        try_files $uri =404;
+        add_header Cache-Control "no-cache, must-revalidate";
+        access_log off;
+    }
+
+    # --- SPA Роутинг ---
+    location / {
+        add_header Cache-Control "no-cache, must-revalidate";
+        try_files $uri $uri/ /index.html;
+    }
+}
+EOF
+
+COPY <<'EOF' /entrypoint.sh
+#!/bin/sh
+# Генерирует рантайм-конфиг клиента из переменных окружения при старте контейнера
+set -e
+
+mkdir -p /usr/share/nginx/html/configs
+
+cat > /usr/share/nginx/html/configs/app-config.js <<CONFIG
+// Сгенерировано entrypoint-ом контейнера при запуске
+window.__APP_CONFIG__ = {
+  API_URL: "${VITE_API_URL:-}",
+  OTEL_EXPORTER_OTLP_ENDPOINT: "${OTEL_EXPORTER_OTLP_ENDPOINT:-}",
+  CDN_URL: "${CDN_URL:-${VITE_CDN_URL:-}}",
+}
+CONFIG
+
+exec nginx -g 'daemon off;'
+EOF
+
+RUN chmod +x /entrypoint.sh
+
+EXPOSE 3334
+
+CMD ["/entrypoint.sh"]
