@@ -1,0 +1,84 @@
+# --- Default ------------------------------------------------------------ #
+stages:
+  - install_deps
+  - test
+  - build
+  - docker
+
+default:
+  image: node:20.6.1
+  before_script:
+    - npm i bun -g --quiet
+
+# --- Caches ------------------------------------------------------ #
+.node_modules-cache: &node_modules-cache
+  key:
+    files:
+      - bun.lockb
+  paths:
+    - node_modules
+  policy: pull
+
+.test-cache: &test-cache
+  key: test-$CI_JOB_IMAGE
+  paths:
+    - .vitestcache
+  policy: pull-push
+
+.bun-cache: &bun-cache
+  key: bun-$CI_JOB_IMAGE
+  paths:
+    - ~/.bun/install/cache
+
+.build-cache: &build-cache
+  key: build-$CI_JOB_IMAGE
+  paths:
+    - .cache
+  policy: pull-push
+
+# --- Jobs [Common] ------------------------------------------------------ #
+Install Dependencies:
+  stage: install_deps
+  script:
+    - bun install
+  cache:
+    - <<: *node_modules-cache
+      policy: pull-push
+    - <<: *bun-cache
+
+Test:
+  stage: test
+  script:
+    - bun run test
+  cache:
+    - <<: *node_modules-cache
+    - <<: *test-cache
+
+Build:
+  stage: build
+  script:
+    - bun run build
+  cache:
+    - <<: *node_modules-cache
+    - <<: *build-cache
+
+# --- Jobs [Docker] ------------------------------------------------------ #
+Docker Build:
+  before_script:
+    - docker info
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  stage: docker
+  cache: {}
+  image: docker:stable
+  services:
+    - docker:dind
+  script:
+    - docker pull ${CI_REGISTRY_IMAGE}/gprg:latest || true
+    - docker build
+      --cache-from ${CI_REGISTRY_IMAGE}/gprg:latest
+      -t ${CI_REGISTRY_IMAGE}/gprg:prod
+      -t ${CI_REGISTRY_IMAGE}/gprg:latest .
+    - docker push ${CI_REGISTRY_IMAGE}/gprg
+  when: manual
+  only:
+    - tags

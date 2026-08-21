@@ -1,0 +1,83 @@
+version: '3.8'
+
+services:
+  trick-surf-db:
+    image: postgres:16-alpine
+    container_name: trick-surf-db-local
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      # === Database ===
+      POSTGRES_USER: ${POSTGRES_USER:-surfgxds}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-surfgxds}
+      POSTGRES_DB: ${POSTGRES_DB:-surfgxds_dev}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+    volumes:
+      - local_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-surfgxds} -d ${POSTGRES_DB:-surfgxds_dev}"]
+      interval: 3s
+      timeout: 3s
+      retries: 5
+
+  trick-surf-server:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.server
+    image: trick-surf-server:local
+    container_name: trick-surf-server-local
+    restart: unless-stopped
+    env_file:
+      - .env
+    depends_on:
+      trick-surf-db:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    environment:
+      # === App Core ===
+      PORT: "8080"
+      HOST: "0.0.0.0"
+      NODE_ENV: "development"
+
+      # === Database ===
+      DATABASE_URL: postgresql://${POSTGRES_USER:-surfgxds}:${POSTGRES_PASSWORD:-surfgxds}@trick-surf-db:5432/${POSTGRES_DB:-surfgxds_dev}?schema=public
+
+      # === APM (signoz) ===
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT:-}
+      OTEL_SERVICE_NAME: "trick-surf-server"
+
+      # === Redirects / CORS ===
+      FRONTEND_URL: "http://localhost:3334"
+      CORS_EXTRA_ORIGINS: ${CORS_EXTRA_ORIGINS:-}
+    volumes:
+      - ./public:/app/apps/server/public
+
+  trick-surf-client:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.client
+    image: trick-surf-client:local
+    container_name: trick-surf-client-local
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "3334:3334"
+    environment:
+      # === App Config ===
+      VITE_API_URL: "http://localhost:8080"
+      VITE_CDN_URL: ${VITE_CDN_URL:-}
+
+      # === APM (signoz) ===
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT:-}
+    volumes:
+      - ./configs:/usr/share/nginx/html/configs
+    depends_on:
+      - trick-surf-server
+
+volumes:
+  local_postgres_data:

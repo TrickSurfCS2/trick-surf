@@ -1,0 +1,68 @@
+@use 'sass:map';
+@use 'sass:list';
+@use '../_variables.scss' as *;
+
+@mixin media-up($name) {
+  $min-width: map.get($breakpoints, $name);
+
+  @if $min-width > 0 {
+    @media (min-width: $min-width) {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}
+
+@mixin media-down($name) {
+  $max-width: map.get($breakpoints, $name);
+
+  @if $max-width > 0 {
+    @media (max-width: #{$max-width - 1}) {
+      @content;
+    }
+  } @else {
+    $keys: map.keys($breakpoints);
+    $index: list.index($keys, $name);
+    $next-key: null;
+    @if list.length($keys) > $index {
+      $next-key: list.nth($keys, $index + 1);
+    }
+
+    @if $next-key {
+      $upper-bound: map.get($breakpoints, $next-key) - 1;
+      @media (max-width: $upper-bound) {
+        @content;
+      }
+    }
+  }
+}
+
+@mixin media-only($name) {
+  $min-width: map.get($breakpoints, $name);
+
+  $keys: map.keys($breakpoints);
+  $index: list.index($keys, $name);
+  $next-key: null;
+  @if list.length($keys) > $index {
+    $next-key: list.nth($keys, $index + 1);
+  }
+
+  @if $min-width == 0 {
+    @if $next-key {
+      $max-width: map.get($breakpoints, $next-key) - 1;
+      @media (max-width: $max-width) {
+        @content;
+      }
+    }
+  } @else if $next-key {
+    $max-width: map.get($breakpoints, $next-key) - 1;
+    @media (min-width: $min-width) and (max-width: $max-width) {
+      @content;
+    }
+  } @else {
+    @media (min-width: $min-width) {
+      @content;
+    }
+  }
+}

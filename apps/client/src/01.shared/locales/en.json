@@ -1,0 +1,122 @@
+{
+  "app": {
+    "title": "SurfGxds - TrickSurf",
+    "description": "CS2 Trick Surf Community and Leaderboards",
+    "theme": "Theme",
+    "language": "Language",
+    "online": "Online",
+    "offline": "Offline"
+  },
+  "routes": {
+    "Home": "Home",
+    "Tricks": "Tricks",
+    "Triggers": "Triggers",
+    "Records": "Records",
+    "Faq": "FAQ",
+    "NotFound": "404 Not Found"
+  },
+  "home": {
+    "subtitle": "CS2 Trick Surf Community & Leaderboard",
+    "description": "Explore tricks, study map trigger zones, set records, and compete with other players on TrickSurf servers.",
+    "selectMapHint": "Current map:",
+    "copyIp": "Copy IP",
+    "ipCopied": "Server IP copied to clipboard",
+    "sections": {
+      "tricks": {
+        "title": "Tricks",
+        "badge": "Routes & Points",
+        "desc": "Browse available tricks for the map, difficulty points, completions, and route sequences.",
+        "action": "View Tricks"
+      },
+      "triggers": {
+        "title": "Triggers",
+        "badge": "Zones & Coords",
+        "desc": "Interactive trigger zones, checkpoints, and waypoints for each map.",
+        "action": "Explore Triggers"
+      },
+      "records": {
+        "title": "Records",
+        "badge": "Speed & Time WR",
+        "desc": "Leaderboards for top speed and fastest completion times across all tricks.",
+        "action": "View Leaderboard"
+      },
+      "faq": {
+        "title": "FAQ & Guides",
+        "badge": "Rules & Commands",
+        "desc": "Rules for Pre-strafe / Unlimited modes, available chat commands, and guides.",
+        "action": "Open FAQ"
+      },
+      "server": {
+        "title": "Game Server",
+        "badge": "CS2 Server",
+        "desc": "Connect directly in CS2 and practice surfing tricks with the community.",
+        "action": "Connect Now"
+      }
+    }
+  },
+  "nav": {
+    "home": "Home",
+    "tricks": "Tricks",
+    "triggers": "Triggers",
+    "records": "Records",
+    "faq": "FAQ",
+    "selectMap": "Select Map",
+    "connectServer": "Connect to server"
+  },
+  "tricks": {
+    "index": "#",
+    "name": "Trick Name",
+    "points": "Points",
+    "completes": "Total Completes",
+    "length": "Trick Length",
+    "createdBy": "Created by",
+    "added": "Added",
+    "route": "Route",
+    "noTricks": "No tricks available for this map",
+    "unknownAuthor": "Unknown",
+    "speed": "Speed",
+    "time": "Time",
+    "loading": "Loading tricks..."
+  },
+  "triggers": {
+    "title": "Triggers",
+    "search": "Search triggers...",
+    "noTriggers": "No triggers found",
+    "loading": "Loading triggers..."
+  },
+  "records": {
+    "title": "Records",
+    "inDevelopment": "IN DEVELOPMENT",
+    "soon": "Leaderboards and records table coming soon."
+  },
+  "faq": {
+    "title": "FAQ",
+    "aboutServer": "About the Server",
+    "aboutText1": "Trick surf server is a community gaming mode built on surf sliding mechanics. The server tracks player movements across the map and validates completed tricks based on trajectory zones.",
+    "aboutPreStrafe": "Pre-Strafe — Trick start must begin from a standstill start position, and tracking starts after jumping. Speed must not exceed 405.",
+    "aboutUnlimited": "Unlimited — Trick start can be anywhere with any entry speed.",
+    "availableCommands": "Available Commands",
+    "team": "Development Team",
+    "serverIp": "Server IP"
+  },
+  "kit": {
+    "dialog": {
+      "close": "Close",
+      "expand": "Expand",
+      "minimize": "Minimize"
+    },
+    "pwa": {
+      "updateAvailable": "Application update is available",
+      "reload": "Reload"
+    },
+    "network": {
+      "offline": "No internet connection",
+      "timeout": "Network request timed out"
+    }
+  },
+  "errors": {
+    "network": "Network error. Please check your connection.",
+    "server500": "Internal server error",
+    "notFound": "Page not found"
+  }
+}

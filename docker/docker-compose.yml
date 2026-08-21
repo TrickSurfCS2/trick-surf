@@ -1,0 +1,100 @@
+version: '3.8'
+
+services:
+  trick-surf-db:
+    image: postgres:16-alpine
+    container_name: trick-surf-db
+    environment:
+      # === Database ===
+      POSTGRES_USER: ${POSTGRES_USER:-surfgxds}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-surfgxds}
+      POSTGRES_DB: ${POSTGRES_DB:-surfgxds}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-surfgxds} -d ${POSTGRES_DB:-surfgxds}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - prod-net
+    deploy:
+      restart_policy:
+        condition: any
+
+  trick-surf-server:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.server
+    image: ${REGISTRY:-docker.io}/injurka/trick-surf-server:${V_SERVER:-latest}
+    container_name: trick-surf-server
+    depends_on:
+      trick-surf-db:
+        condition: service_healthy
+    environment:
+      # === App Core ===
+      PORT: "8080"
+      HOST: "0.0.0.0"
+      NODE_ENV: "production"
+
+      # === Database ===
+      DATABASE_URL: ${DATABASE_URL:-postgresql://${POSTGRES_USER:-surfgxds}:${POSTGRES_PASSWORD:-surfgxds}@trick-surf-db:5432/${POSTGRES_DB:-surfgxds}?schema=public}
+
+      # === APM (signoz) ===
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT:-http://signoz-ingester:4318}
+      OTEL_SERVICE_NAME: "trick-surf-server"
+
+      # === Redirects / CORS ===
+      FRONTEND_URL: ${FRONTEND_URL:-https://${DOMAIN_CLIENT:-trick-surf.limited-dissolve.ru}}
+      CORS_EXTRA_ORIGINS: ${CORS_EXTRA_ORIGINS:-}
+    volumes:
+      - ./public:/app/apps/server/public
+    networks:
+      - prod-net
+    deploy:
+      restart_policy:
+        condition: any
+      labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=prod-net"
+        - "traefik.http.routers.trick-server.rule=Host(`${DOMAIN_API:-trick-surf-api.limited-dissolve.ru}`)"
+        - "traefik.http.routers.trick-server.entrypoints=websecure"
+        - "traefik.http.routers.trick-server.tls=true"
+        - "traefik.http.services.trick-server.loadbalancer.server.port=8080"
+
+  trick-surf-client:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.client
+    image: ${REGISTRY:-docker.io}/injurka/trick-surf-client:${V_CLIENT:-latest}
+    container_name: trick-surf-client
+    environment:
+      # === App Config ===
+      VITE_API_URL: ${VITE_API_URL:-https://${DOMAIN_API:-trick-surf-api.limited-dissolve.ru}}
+      VITE_CDN_URL: ${VITE_CDN_URL:-}
+
+      # === APM (signoz) ===
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT:-}
+    volumes:
+      - ./configs:/usr/share/nginx/html/configs
+    networks:
+      - prod-net
+    deploy:
+      restart_policy:
+        condition: any
+      labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=prod-net"
+        - "traefik.http.routers.trick-client.rule=Host(`${DOMAIN_CLIENT:-trick-surf.limited-dissolve.ru}`)"
+        - "traefik.http.routers.trick-client.entrypoints=websecure"
+        - "traefik.http.routers.trick-client.tls=true"
+        - "traefik.http.services.trick-client.loadbalancer.server.port=3334"
+
+volumes:
+  postgres_data:
+
+networks:
+  prod-net:
+    external: true
+    name: prod-net

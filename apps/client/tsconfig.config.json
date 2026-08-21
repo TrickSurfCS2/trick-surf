@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "types": [
+      "bun"
+    ],
+    "allowImportingTsExtensions": true,
+    "emitDeclarationOnly": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true
+  },
+  "include": [
+    "src/**/*.ts",
+    "./build/**/*",
+    "vite.config.web.ts"
+  ]
+}

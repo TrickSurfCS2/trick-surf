@@ -1,0 +1,23 @@
+colors: true
+
+pre-commit:
+  parallel: true
+  commands:
+    lint:
+      glob: "**/*.{js,ts,tsx,vue}"
+      run: bun run lint
+
+    typecheck:
+      glob: "**/*.{ts,tsx,vue}"
+      run: bun run typecheck
+
+post-commit:
+  commands:
+    status:
+      run: git status
+
+post-merge:
+  commands:
+    install:
+      glob: "**/package.json|bun.lock"
+      run: bun i

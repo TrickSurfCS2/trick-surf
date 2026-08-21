@@ -1,0 +1,52 @@
+{
+  "name": "@injurka/trick-surf",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "bun@1.4.0",
+  "overrides": {
+    "vue": "3.5.41",
+    "vue-router": "^5.2.0",
+    "pinia": "4.0.3"
+  },
+  "engines": {
+    "bun": ">=1.4.0"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "tools/*"
+  ],
+  "scripts": {
+    "--------------------------------<      DEV       >--------------------------------": "",
+    "dev": "turbo dev",
+    "dev:client": "turbo dev --filter=@injurka/trick-surf-client",
+    "dev:server": "turbo dev --filter=@injurka/trick-surf-server",
+    "--------------------------------<      BUILD     >--------------------------------": "",
+    "build": "turbo build",
+    "build:client": "turbo build --filter=@injurka/trick-surf-client",
+    "build:server": "turbo build --filter=@injurka/trick-surf-server",
+    "--------------------------------< LINT & FORMAT >---------------------------------": "",
+    "lint": "turbo lint",
+    "lint:fix": "turbo lint:fix",
+    "test": "turbo test",
+    "test:client": "turbo test --filter=@injurka/trick-surf-client",
+    "test:server": "turbo test --filter=@injurka/trick-surf-server",
+    "typecheck": "turbo typecheck",
+    "typecheck:client": "turbo typecheck --filter=@injurka/trick-surf-client",
+    "typecheck:server": "turbo typecheck --filter=@injurka/trick-surf-server",
+    "--------------------------------<   DATABASE    >---------------------------------": "",
+    "prisma:migrate": "turbo prisma:migrate --filter=@injurka/trick-surf-server",
+    "prisma:generate": "turbo prisma:generate --filter=@injurka/trick-surf-server",
+    "prisma:studio": "turbo prisma:studio --filter=@injurka/trick-surf-server",
+    "prisma:seed": "turbo prisma:seed --filter=@injurka/trick-surf-server",
+    "--------------------------------< DEPENDENCIES >----------------------------------": "",
+    "skott": "skott --displayMode=webapp --tsconfig=tsconfig.json"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.4.0",
+    "lefthook": "^2.1.10",
+    "skott": "^0.35.11",
+    "turbo": "^2.10.9"
+  }
+}

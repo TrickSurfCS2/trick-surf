@@ -1,0 +1,27 @@
+{
+	"folders": [
+		{
+			"name": "~",
+			"path": "."
+		},
+		{
+			"name": "client",
+			"path": "apps/client"
+		},
+		{
+			"name": "server",
+			"path": "apps/server"
+		},
+		{
+			"name": "⚙️ tools",
+			"path": "tools"
+		},
+		{
+			"name": "📦 packages",
+			"path": "packages"
+		}
+	],
+	"settings": {
+		"explorer.fileNesting.expand": false
+	}
+}

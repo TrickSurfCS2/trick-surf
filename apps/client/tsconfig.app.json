@@ -1,0 +1,49 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "target": "ESNext",
+    "jsx": "preserve",
+    "lib": [
+      "ESNext",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "useDefineForClassFields": true,
+    "experimentalDecorators": true,
+    "module": "ESNext",
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "paths": {
+      "~/*": [
+        "./src/*"
+      ]
+    },
+    "resolveJsonModule": true,
+    "types": [
+      "vite/client",
+      "vite-plugin-pwa/vue",
+      "bun"
+    ],
+    "allowImportingTsExtensions": true,
+    /* Linting */
+    "strict": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "emitDeclarationOnly": true,
+    "isolatedModules": true,
+    "skipLibCheck": true
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue"
+  ],
+  "exclude": [
+    "src/**/*.spec.ts",
+    "src/**/*.test.ts",
+    "src/**/*.spec.tsx",
+    "src/**/*.test.tsx"
+  ]
+}

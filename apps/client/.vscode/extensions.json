@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "aaron-bond.better-comments",
+    "usernamehw.errorlens",
+    "loiane.ts-extension-pack",
+    "naumovs.color-highlight"
+  ],
+  "unwantedRecommendations": ["octref.vetur", "esbenp.prettier-vscode"]
+}
