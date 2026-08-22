@@ -38,17 +38,18 @@ http://localhost:8080/swagger
 OTLP collector endpoint (traces, metrics, logs via OTEL_EXPORTER_OTLP_ENDPOINT)
 ```
 
-### In order for everything to work correctly, the PostgreSQL database must be up and running.
+### In order for everything to work correctly, the MySQL database must be up and running.
 
 ```bash
-docker run -p 5432:5432 \
-  --name surfgxds-postgres \
-  -e POSTGRES_PASSWORD=surfgxds \
-  -e POSTGRES_USER=surfgxds \
-  -e POSTGRES_DB=surfgxds_dev \
+docker run -p 3306:3306 \
+  --name surfgxds-mysql \
+  -e MYSQL_PASSWORD=surfgxds \
+  -e MYSQL_USER=surfgxds \
+  -e MYSQL_DATABASE=surfgxds_dev \
+  -e MYSQL_ROOT_PASSWORD=surfgxds_root_pwd \
   -d \
   --restart always \
-  postgres:latest
+  mysql:8.4
 ```
 
 After launching, perform migrations and seeding of all data, this can be done by writing:

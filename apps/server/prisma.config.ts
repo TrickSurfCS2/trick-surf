@@ -15,6 +15,6 @@ export default defineConfig({
     seed: 'bun prisma/seed.ts',
   },
   datasource: {
-    url: process.env.DATABASE_URL || 'postgresql://surfgxds:surfgxds@localhost:5432/surfgxds_dev?schema=public',
+    url: process.env.DATABASE_URL || 'mysql://surfgxds:surfgxds@localhost:3306/surfgxds_dev',
   },
 })

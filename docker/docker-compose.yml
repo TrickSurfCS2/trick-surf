@@ -2,16 +2,16 @@ version: '3.8'
 
 services:
   trick-surf-db:
-    image: postgres:16-alpine
+    image: mysql:8.4
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-surfgxds}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-surfgxds}
-      POSTGRES_DB: ${POSTGRES_DB:-surfgxds}
-      PGDATA: /var/lib/postgresql/data/pgdata
+      MYSQL_USER: ${MYSQL_USER:-surfgxds}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-surfgxds}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-surfgxds}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-surfgxds_root_pwd}
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - mysql_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-surfgxds} -d ${POSTGRES_DB:-surfgxds}"]
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -p$${MYSQL_ROOT_PASSWORD:-surfgxds_root_pwd} --silent"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -29,7 +29,7 @@ services:
       PORT: "8080"
       HOST: "0.0.0.0"
       NODE_ENV: "production"
-      DATABASE_URL: postgresql://${POSTGRES_USER:-surfgxds}:${POSTGRES_PASSWORD:-surfgxds}@trick-surf-db:5432/${POSTGRES_DB:-surfgxds}?schema=public
+      DATABASE_URL: mysql://${MYSQL_USER:-surfgxds}:${MYSQL_PASSWORD:-surfgxds}@trick-surf-db:3306/${MYSQL_DATABASE:-surfgxds}
       OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT:-http://signoz-ingester:4318}
       OTEL_SERVICE_NAME: "trick-surf-server"
       FRONTEND_URL: https://${DOMAIN_CLIENT:-trick-surf.limited-dissolve.ru}
@@ -67,7 +67,7 @@ services:
         - "traefik.http.services.trick-client.loadbalancer.server.port=3334"
 
 volumes:
-  postgres_data:
+  mysql_data:
 
 networks:
   prod-net:

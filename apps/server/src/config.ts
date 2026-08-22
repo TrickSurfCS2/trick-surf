@@ -5,7 +5,7 @@ const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
   HOST: z.string().default('0.0.0.0'),
   PORT: z.coerce.number().int().positive().default(8080),
-  DATABASE_URL: z.string().default('postgresql://surfgxds:surfgxds@localhost:5432/surfgxds_dev?schema=public'),
+  DATABASE_URL: z.string().default('mysql://surfgxds:surfgxds@localhost:3306/surfgxds_dev'),
   CORS_EXTRA_ORIGINS: z.string().default(''),
   FRONTEND_URL: z.string().default('http://localhost:5173'),
   OTEL_EXPORTER_OTLP_ENDPOINT: z.string().optional().default(''),

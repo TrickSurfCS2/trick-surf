@@ -23,6 +23,13 @@ const seedFiles: SeedFile[] = [
 async function run() {
   logger.info('✨ Run seeds')
 
+  try {
+    await prisma.$executeRawUnsafe('SET FOREIGN_KEY_CHECKS = 0')
+  }
+  catch {
+    // Ignore if not supported
+  }
+
   for (const seedFile of seedFiles) {
     try {
       const file = Bun.file(resolve(__dirname, seedFile.path))
@@ -37,6 +44,13 @@ async function run() {
     catch (e) {
       logger.error(e, `❌ Seed failed: ${seedFile.name}`)
     }
+  }
+
+  try {
+    await prisma.$executeRawUnsafe('SET FOREIGN_KEY_CHECKS = 1')
+  }
+  catch {
+    // Ignore if not supported
   }
 
   logger.info('✨ All seeds finished')

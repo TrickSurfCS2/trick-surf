@@ -1,6 +1,6 @@
-TRUNCATE TABLE public."trick" CONTINUE IDENTITY RESTRICT;
+TRUNCATE TABLE `trick`;
 
-INSERT INTO "trick" (id,name,point,"startType","createdAt","authorId","mapId") VALUES
+INSERT INTO `trick` (id, name, point, `startType`, `createdAt`, `authorId`, `mapId`) VALUES
 	 (1,'Spawn return',200,0,'2021-04-21 11:59:15',1,1),
 	 (2,'Anime return',600,0,'2021-04-21 11:59:15',1,1),
 	 (3,'Soft boiled egg',900,0,'2021-04-21 11:59:15',1,1),

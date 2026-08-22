@@ -1,8 +1,6 @@
-TRUNCATE TABLE public."user" CONTINUE IDENTITY RESTRICT;
+TRUNCATE TABLE `user`;
 
-ALTER TABLE public."user" ADD CONSTRAINT unique_steamid UNIQUE (steamid);
-
-INSERT INTO "user" (id,steamid,username,"createdAt") VALUES
+INSERT INTO `user` (id, steamid, username, `createdAt`) VALUES
 	 (1,'76561198177823310','< blank >','2022-01-24 16:13:04'),
 	 (2,'76561198120754101','Parta','2022-01-24 16:13:04'),
 	 (3,'76561199102216179','pu$$y','2022-01-24 16:13:04'),

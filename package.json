@@ -37,6 +37,8 @@
     "typecheck:server": "turbo typecheck --filter=@injurka/trick-surf-server",
     "--------------------------------<   DATABASE    >---------------------------------": "",
     "prisma:migrate": "turbo prisma:migrate --filter=@injurka/trick-surf-server",
+    "prisma:deploy": "turbo prisma:deploy --filter=@injurka/trick-surf-server",
+    "prisma:push": "turbo prisma:push --filter=@injurka/trick-surf-server",
     "prisma:generate": "turbo prisma:generate --filter=@injurka/trick-surf-server",
     "prisma:studio": "turbo prisma:studio --filter=@injurka/trick-surf-server",
     "prisma:seed": "turbo prisma:seed --filter=@injurka/trick-surf-server",

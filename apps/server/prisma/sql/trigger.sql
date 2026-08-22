@@ -1,6 +1,6 @@
-TRUNCATE TABLE public."trigger" CONTINUE IDENTITY RESTRICT;
+TRUNCATE TABLE `trigger`;
 
-INSERT INTO "trigger" (id,"name","fullName","mapId",preview) VALUES
+INSERT INTO `trigger` (id, `name`, `fullName`, `mapId`, preview) VALUES
 	 (1,'t_spawn','t_spawn',1,'https://i.imgur.com/fyByppg.png'),
 	 (2,'main_ramp','main_ramp',1,'https://i.imgur.com/0g23PcO.png'),
 	 (3,'tower_top','tower_top',1,'https://i.imgur.com/kuHe8UM.png'),

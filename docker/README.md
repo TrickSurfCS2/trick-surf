@@ -1,7 +1,7 @@
 # 🐳 Руководство по развертыванию TrickSurf через Docker
 
 В этой директории содержатся конфигурации для сборки и развертывания полного стека проекта **TrickSurf**:
-- **`trick-surf-db`** — База данных PostgreSQL 16 (с автоматической проверкой healthcheck).
+- **`trick-surf-db`** — База данных MySQL 8.4 (с автоматической проверкой healthcheck).
 - **`trick-surf-server`** — Бэкенд на Bun + Elysia + Prisma ORM + OpenTelemetry / SigNoz.
 - **`trick-surf-client`** — Фронтенд на Vue 3 + Vite, раздаваемый через Nginx с динамической подстановкой рантайм-конфигурации (`app-config.js`).
 
@@ -13,8 +13,8 @@
 docker/
 ├── Dockerfile.client        # Многоэтапная сборка фронтенда + Nginx
 ├── Dockerfile.server        # Сборка бэкенда на oven/bun с OpenSSL для Prisma
-├── docker-compose.local.yml # Локальный запуск (порты db:5432, server:8080, client:3334)
-├── docker-compose.yml       # Продакшен запуск (Traefik, внешняя сеть trip-net)
+├── docker-compose.local.yml # Локальный запуск (порты db:3306, server:8080, client:3334)
+├── docker-compose.yml       # Продакшен запуск (Traefik, внешняя сеть prod-net)
 ├── .env.example             # Пример переменных окружения
 ├── .gitignore               # Игнорирование локальных .env и конфигов
 ├── configs/                 # Директория для монтирования конфигов
@@ -54,7 +54,7 @@ docker compose -f docker/docker-compose.local.yml ps
 - **Server (Backend API)**: [http://localhost:8080](http://localhost:8080)
 - **Swagger UI**: [http://localhost:8080/swagger](http://localhost:8080/swagger)
 - **Health check**: [http://localhost:8080/health](http://localhost:8080/health)
-- **PostgreSQL**: `localhost:5432`
+- **MySQL**: `localhost:3306`
 
 ---
 
@@ -99,17 +99,17 @@ exit
 
 ---
 
-### Вариант В: Подключение к PostgreSQL напрямую
+### Вариант В: Подключение к MySQL напрямую
 
 ```bash
-docker exec -it trick-surf-db-local psql -U surfgxds -d surfgxds_dev
+docker exec -it trick-surf-db-local mysql -u surfgxds -psurfgxds surfgxds_dev
 ```
 
-Полезные команды psql:
-- `\dt` — список всех таблиц.
+Полезные команды mysql:
+- `SHOW TABLES;` — список всех таблиц.
 - `SELECT count(*) FROM map;` — проверить количество карт.
 - `SELECT count(*) FROM trick;` — проверить количество трюков.
-- `\q` — выйти.
+- `exit` — выйти.
 
 ---
 
@@ -131,7 +131,7 @@ docker network create prod-net
 DOMAIN_CLIENT=trick-surf.limited-dissolve.ru
 DOMAIN_API=trick-surf-api.limited-dissolve.ru
 NODE_ENV=production
-POSTGRES_PASSWORD=strong_generated_password
+MYSQL_PASSWORD=strong_generated_password
 ```
 
 ### Шаг 3: Запуск в проде

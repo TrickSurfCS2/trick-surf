@@ -5,7 +5,7 @@
 ### Стек технологий:
 - **Client (Frontend)**: Vue 3, Vite, TypeScript, Pinia, Three.js, SCSS, PWA
 - **Server (Backend)**: Bun, Elysia, TypeScript, Prisma ORM, OpenTelemetry (SigNoz)
-- **Database**: PostgreSQL 16 (всегда запускается в Docker)
+- **Database**: MySQL 8.4 (всегда запускается в Docker)
 - **Монорепозиторий**: Turborepo, Bun Workspaces
 
 ---
@@ -24,7 +24,7 @@
 
 Перед началом работы убедитесь, что на компьютере установлены:
 
-1. **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** — необходим для запуска базы данных PostgreSQL (и опционально всего стека).
+1. **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** — необходим для запуска базы данных MySQL (и опционально всего стека).
 2. **[Bun](https://bun.sh/)** *(версия >= 1.4.0)* — JavaScript/TypeScript рантайм и пакетный менеджер:
    - **Windows (PowerShell)**:
      ```powershell
@@ -64,7 +64,7 @@
 
 ## Вариант 1: Локальная разработка (Client + Server локально, БД в Docker) — РЕКОМЕНДУЕТСЯ
 
-> **Подходит для разработки и тестирования**: клиент и сервер запускаются локально на машине разработчика с автоматической перезагрузкой при изменении кода (Hot-Reload / Watch mode), а база данных PostgreSQL работает в Docker-контейнере.
+> **Подходит для разработки и тестирования**: клиент и сервер запускаются локально на машине разработчика с автоматической перезагрузкой при изменении кода (Hot-Reload / Watch mode), а база данных MySQL работает в Docker-контейнере.
 
 ### Шаг 1. Клонирование репозитория
 ```bash
@@ -84,7 +84,7 @@ cd trick-surf
    ```dotenv
    HOST=localhost
    PORT=8080
-   DATABASE_URL=postgresql://surfgxds:surfgxds@localhost:5432/surfgxds_dev
+   DATABASE_URL=mysql://surfgxds:surfgxds@localhost:3306/surfgxds_dev
    ```
 
 2. **Клиент**:
@@ -100,12 +100,12 @@ cd trick-surf
 
 ### Шаг 3. Запуск базы данных в Docker
 
-Запустите контейнер с PostgreSQL:
+Запустите контейнер с MySQL:
 ```bash
 docker compose -f docker/docker-compose.local.yml up -d trick-surf-db
 ```
 
-> Флаг `-d` запускает контейнер в фоновом режиме. База данных будет доступна на порту `localhost:5432`.
+> Флаг `-d` запускает контейнер в фоновом режиме. База данных будет доступна на порту `localhost:3306`.
 
 ---
 
@@ -161,7 +161,7 @@ bun dev
 
 ## Вариант 2: Полный запуск в Docker (Все сервисы в контейнерах)
 
-> **Подходит для тестирования релизной сборки (как на продакшене)**: все сервисы (PostgreSQL, сервер на Bun, фронтенд на Nginx) запускаются изолированно в Docker.
+> **Подходит для тестирования релизной сборки (как на продакшене)**: все сервисы (MySQL, сервер на Bun, фронтенд на Nginx) запускаются изолированно в Docker.
 
 ### Шаг 1. Создание общего .env файла
 ```bash
@@ -199,15 +199,15 @@ docker compose -f docker/docker-compose.local.yml exec trick-surf-server bun run
 - **Client (Frontend / Nginx)**: [http://localhost:3334](http://localhost:3334)
 - **Server (Backend API)**: [http://localhost:8080](http://localhost:8080)
 - **Swagger API Docs**: [http://localhost:8080/swagger](http://localhost:8080/swagger)
-- **PostgreSQL**: `localhost:5432`
+- **MySQL**: `localhost:3306`
 
 ---
 
 ## Полезные команды и управление базой данных
 
-### Параметры подключения к PostgreSQL
+### Параметры подключения к MySQL
 - **Хост**: `localhost`
-- **Порт**: `5432`
+- **Порт**: `3306`
 - **Пользователь**: `surfgxds`
 - **Пароль**: `surfgxds`
 - **Имя БД**: `surfgxds_dev`
@@ -263,11 +263,11 @@ Docker Desktop не запущен.
 </details>
 
 <details>
-<summary><b>2. Ошибка "Port 5432 is already in use"</b></summary>
+<summary><b>2. Ошибка "Port 3306 is already in use"</b></summary>
 
-На компьютере уже запущен локальный PostgreSQL вне Docker.
-- Либо остановите локальную службу PostgreSQL в службах Windows (`services.msc` -> Postgres -> Остановить) или `sudo systemctl stop postgresql` на Linux.
-- Либо измените порт в `docker/docker-compose.local.yml` (например, `"5433:5432"`) и обновите `DATABASE_URL`.
+На компьютере уже запущен локальный MySQL / MariaDB вне Docker.
+- Либо остановите локальную службу MySQL в службах Windows (`services.msc` -> MySQL -> Остановить) или `sudo systemctl stop mysql` на Linux.
+- Либо измените порт в `docker/docker-compose.local.yml` (например, `"3307:3306"`) и обновите `DATABASE_URL`.
 </details>
 
 <details>

@@ -1,4 +1,4 @@
-TRUNCATE TABLE public."complete" CONTINUE IDENTITY RESTRICT;
+TRUNCATE TABLE `complete`;
 
 -- INSERT INTO "complete" (id,"userId","trickId",speed,"time","createdAt") VALUES
 -- 	 (2,2,138,666,17.041,'2021-05-01 14:44:32'),

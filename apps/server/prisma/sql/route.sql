@@ -1,6 +1,6 @@
-TRUNCATE TABLE public."route" CONTINUE IDENTITY RESTRICT;
+TRUNCATE TABLE `route`;
 
-INSERT INTO "route" (id,"trickId","triggerId")VALUES
+INSERT INTO `route` (id, `trickId`, `triggerId`) VALUES
 	 (1,6661,6661),
 	 (2,6661,6662),
 	 (3,6661,6662),

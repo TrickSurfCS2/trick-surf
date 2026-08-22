@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider     = "postgresql"
+  provider     = "mysql"
   relationMode = "prisma"
 }
 
@@ -78,7 +78,7 @@ model Map {
   name     String
   fullName String
   preview  String?
-  origin   Float[]
+  origin   Json?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
@@ -94,7 +94,7 @@ model Trigger {
   name     String
   fullName String?
   preview  String?
-  coords   Float[] @default([])
+  coords   Json?
 
   mapId Int
 
