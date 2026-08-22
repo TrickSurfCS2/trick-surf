@@ -1,8 +1,8 @@
-# 🏄 TrickSurf — CS2 Trick Surf Platform
+# TrickSurf — CS2 Trick Surf Platform
 
 Монорепозиторий веб-платформы для трекинга и отображения триксерф-карт, зон (триггеров), трюков и рекордов для Counter-Strike 2.
 
-### 🧱 Стек технологий:
+### Стек технологий:
 - **Client (Frontend)**: Vue 3, Vite, TypeScript, Pinia, Three.js, SCSS, PWA
 - **Server (Backend)**: Bun, Elysia, TypeScript, Prisma ORM, OpenTelemetry (SigNoz)
 - **Database**: PostgreSQL 16 (всегда запускается в Docker)
@@ -10,17 +10,17 @@
 
 ---
 
-## 📋 Содержание
-1. [⚙️ Предварительные требования](#️-предварительные-требования)
-2. [⚠️ Важно: Решение частой ошибки Docker на Windows](#️-важно-решение-частой-ошибки-docker-на-windows)
-3. [💻 Вариант 1: Локальная разработка (Client + Server локально, БД в Docker) — РЕКОМЕНДУЕТСЯ](#-вариант-1-локальная-разработка-рекомендуется)
-4. [🐳 Вариант 2: Полный запуск в Docker (Все сервисы в контейнерах)](#-вариант-2-полный-запуск-в-docker)
-5. [🛠️ Полезные команды и управление базой данных](#️-полезные-команды-и-управление-базой-данных)
-6. [❓ Частые проблемы (FAQ)](#-частые-проблемы-faq)
+## Содержание
+1. [Предварительные требования](#предварительные-требования)
+2. [Важно: Решение ошибки Docker на Windows](#важно-решение-ошибки-docker-на-windows)
+3. [Вариант 1: Локальная разработка (Client + Server локально, БД в Docker) — РЕКОМЕНДУЕТСЯ](#вариант-1-локальная-разработка-client--server-локально-бд-в-docker--рекомендуется)
+4. [Вариант 2: Полный запуск в Docker (Все сервисы в контейнерах)](#вариант-2-полный-запуск-в-docker-все-сервисы-в-контейнерах)
+5. [Полезные команды и управление базой данных](#полезные-команды-и-управление-базой-данных)
+6. [Частые проблемы (FAQ)](#частые-проблемы-faq)
 
 ---
 
-## ⚙️ Предварительные требования
+## Предварительные требования
 
 Перед началом работы убедитесь, что на компьютере установлены:
 
@@ -38,17 +38,17 @@
 
 ---
 
-## ⚠️ Важно: Решение частой ошибки Docker на Windows
+## Важно: Решение ошибки Docker на Windows
 
-Если при выполнении любой команды `docker` вы видите ошибку:
+Если при выполнении любой команды `docker` появляется ошибка:
 > `failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine... The system cannot find the file specified`
 
 Это означает, что **Docker Desktop не запущен** или **не инициализирован WSL 2**.
 
-### 🛠️ Что нужно сделать:
+### Что нужно сделать:
 1. Запустите приложение **Docker Desktop** из меню «Пуск».
 2. Дождитесь, пока в левом нижнем углу окна Docker Desktop статус станет зеленым (**"Engine running"**), а в трее иконка кита перестанет мигать.
-3. *Если Docker Desktop не запускается или ругается на WSL 2*:
+3. *Если Docker Desktop не запускается или сообщает об ошибке WSL 2*:
    - Откройте PowerShell от имени администратора и выполните:
      ```powershell
      wsl --update
@@ -58,13 +58,13 @@
    ```bash
    docker ps
    ```
-   *(Команда должна выполниться без ошибок и показать список контейнеров).*
+   *(Команда должна выполниться без ошибок и вывести список контейнеров).*
 
 ---
 
-## 💻 Вариант 1: Локальная разработка (Рекомендуется)
+## Вариант 1: Локальная разработка (Client + Server локально, БД в Docker) — РЕКОМЕНДУЕТСЯ
 
-> **Подходит для разработки и тестирования**: клиент и сервер запускаются локально на вашей машине с быстрой перезагрузкой (Hot-Reload / Watch mode), а база данных PostgreSQL работает в Docker-контейнере.
+> **Подходит для разработки и тестирования**: клиент и сервер запускаются локально на машине разработчика с автоматической перезагрузкой при изменении кода (Hot-Reload / Watch mode), а база данных PostgreSQL работает в Docker-контейнере.
 
 ### Шаг 1. Клонирование репозитория
 ```bash
@@ -72,7 +72,7 @@ git clone https://github.com/your-username/trick-surf.git
 cd trick-surf
 ```
 
-### Шаг 2. Настройка файлов окружения (`.env`)
+### Шаг 2. Настройка файлов окружения (.env)
 
 Создайте файлы конфигурации для сервера и клиента:
 
@@ -105,7 +105,7 @@ cd trick-surf
 docker compose -f docker/docker-compose.local.yml up -d trick-surf-db
 ```
 
-> 💡 Флаг `-d` запускает контейнер в фоновом режиме. База данных будет доступна на порту `localhost:5432`.
+> Флаг `-d` запускает контейнер в фоновом режиме. База данных будет доступна на порту `localhost:5432`.
 
 ---
 
@@ -120,7 +120,7 @@ bun install
 
 ### Шаг 5. Применение миграций и наполнение базы данными (Seed)
 
-Создайте структуру таблиц и загрузите тестовые данные (карты, триггеры, трюки):
+Создайте структуру таблиц и загрузите начальные данные (карты, триггеры, трюки):
 ```bash
 # Применение миграций Prisma
 bun run prisma:migrate
@@ -138,7 +138,7 @@ bun run prisma:seed
 bun dev
 ```
 
-#### Способ Б: Запустить раздельно в двух терминалах (удобно для логов)
+#### Способ Б: Запустить раздельно в двух терминалах (удобно для просмотра логов)
 - **Терминал 1 (Бэкенд)**:
   ```bash
   bun dev:server
@@ -150,20 +150,20 @@ bun dev
 
 ---
 
-### 🌐 Доступные адреса:
-- 🖥️ **Client (Frontend)**: [http://localhost:5173](http://localhost:5173)
-- 🚀 **Server (Backend API)**: [http://localhost:8080](http://localhost:8080)
-- 📖 **Swagger API Docs**: [http://localhost:8080/swagger](http://localhost:8080/swagger)
-- 🩺 **Health Check**: [http://localhost:8080/health](http://localhost:8080/health)
-- 🗄️ **Prisma Studio (Веб-интерфейс БД)**: запустите `bun run prisma:studio` и перейдите на [http://localhost:5555](http://localhost:5555)
+### Доступные адреса:
+- **Client (Frontend)**: [http://localhost:5173](http://localhost:5173)
+- **Server (Backend API)**: [http://localhost:8080](http://localhost:8080)
+- **Swagger API Docs**: [http://localhost:8080/swagger](http://localhost:8080/swagger)
+- **Health Check**: [http://localhost:8080/health](http://localhost:8080/health)
+- **Prisma Studio (Веб-интерфейс БД)**: запустите `bun run prisma:studio` и откройте [http://localhost:5555](http://localhost:5555)
 
 ---
 
-## 🐳 Вариант 2: Полный запуск в Docker
+## Вариант 2: Полный запуск в Docker (Все сервисы в контейнерах)
 
-> **Подходит для тестирования релизной сборки (как на проде)**: все сервисы (PostgreSQL, сервер на Bun, фронтенд на Nginx) запускаются изолированно в Docker.
+> **Подходит для тестирования релизной сборки (как на продакшене)**: все сервисы (PostgreSQL, сервер на Bun, фронтенд на Nginx) запускаются изолированно в Docker.
 
-### Шаг 1. Создание общего `.env` файла
+### Шаг 1. Создание общего .env файла
 ```bash
 cp docker/.env.example docker/.env
 ```
@@ -184,35 +184,35 @@ docker compose -f docker/docker-compose.local.yml ps
 
 ### Шаг 3. Применение миграций и seed внутри контейнера
 
-Так как база запускается в первый раз, накатите миграции и сид через контейнер сервера:
+Так как база запускается в первый раз, примените миграции и сид через контейнер сервера:
 ```bash
 # Применение миграций
 docker compose -f docker/docker-compose.local.yml exec trick-surf-server bun run prisma:migrate
 
-# Заполнение тестовыми данными
+# Заполнение начальными данными
 docker compose -f docker/docker-compose.local.yml exec trick-surf-server bun run prisma:seed
 ```
 
 ---
 
-### 🌐 Доступные адреса в Docker-режиме:
-- 🖥️ **Client (Frontend / Nginx)**: [http://localhost:3334](http://localhost:3334)
-- 🚀 **Server (Backend API)**: [http://localhost:8080](http://localhost:8080)
-- 📖 **Swagger API Docs**: [http://localhost:8080/swagger](http://localhost:8080/swagger)
-- 🗄️ **PostgreSQL**: `localhost:5432`
+### Доступные адреса в Docker-режиме:
+- **Client (Frontend / Nginx)**: [http://localhost:3334](http://localhost:3334)
+- **Server (Backend API)**: [http://localhost:8080](http://localhost:8080)
+- **Swagger API Docs**: [http://localhost:8080/swagger](http://localhost:8080/swagger)
+- **PostgreSQL**: `localhost:5432`
 
 ---
 
-## 🛠️ Полезные команды и управление базой данных
+## Полезные команды и управление базой данных
 
-### 🐘 Параметры подключения к PostgreSQL
+### Параметры подключения к PostgreSQL
 - **Хост**: `localhost`
 - **Порт**: `5432`
 - **Пользователь**: `surfgxds`
 - **Пароль**: `surfgxds`
 - **Имя БД**: `surfgxds_dev`
 
-### 🔄 Сброс базы данных (полная пересоздание и повторный seed)
+### Сброс базы данных (полное пересоздание и повторный seed)
 - **При локальной разработке**:
   ```bash
   cd apps/server
@@ -223,7 +223,7 @@ docker compose -f docker/docker-compose.local.yml exec trick-surf-server bun run
   docker compose -f docker/docker-compose.local.yml exec trick-surf-server bun run prisma:reset
   ```
 
-### 🛑 Остановка контейнеров
+### Остановка контейнеров
 - **Остановить контейнеры**:
   ```bash
   docker compose -f docker/docker-compose.local.yml stop
@@ -237,7 +237,7 @@ docker compose -f docker/docker-compose.local.yml exec trick-surf-server bun run
   docker compose -f docker/docker-compose.local.yml down -v
   ```
 
-### 📜 Просмотр логов
+### Просмотр логов
 ```bash
 # Логи сервера
 docker compose -f docker/docker-compose.local.yml logs -f trick-surf-server
@@ -251,21 +251,21 @@ docker compose -f docker/docker-compose.local.yml logs -f trick-surf-db
 
 ---
 
-## ❓ Частые проблемы (FAQ)
+## Частые проблемы (FAQ)
 
 <details>
 <summary><b>1. Ошибка "dockerDesktopLinuxEngine: The system cannot find the file specified"</b></summary>
 
 Docker Desktop не запущен.
 1. Откройте приложение **Docker Desktop**.
-2. Убедитесь, что индикатор в нижнем левом углу горит зеленым цветом.
-3. Попробуйте снова запустить команду.
+2. Убедитесь, что статус в нижнем левом углу перешел в "Engine running".
+3. Повторите запуск команды.
 </details>
 
 <details>
 <summary><b>2. Ошибка "Port 5432 is already in use"</b></summary>
 
-На вашем компьютере уже запущен локальный PostgreSQL вне Docker.
+На компьютере уже запущен локальный PostgreSQL вне Docker.
 - Либо остановите локальную службу PostgreSQL в службах Windows (`services.msc` -> Postgres -> Остановить) или `sudo systemctl stop postgresql` на Linux.
 - Либо измените порт в `docker/docker-compose.local.yml` (например, `"5433:5432"`) и обновите `DATABASE_URL`.
 </details>
