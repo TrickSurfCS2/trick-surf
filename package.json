@@ -18,6 +18,7 @@
     "tools/*"
   ],
   "scripts": {
+    "postinstall": "bun tools/patch-prisma-studio.ts",
     "--------------------------------<      DEV       >--------------------------------": "",
     "dev": "turbo dev",
     "dev:client": "turbo dev --filter=@injurka/trick-surf-client",
