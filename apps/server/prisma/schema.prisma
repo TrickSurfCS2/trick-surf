@@ -161,3 +161,65 @@ enum Permission {
   BanUser
   Teleport
 }
+
+//* ==== Game Server Plugin Models (Read-only / Preserved) ========================= *//
+
+model lvl_base {
+  steam       String  @id @db.VarChar(22)
+  name        String? @db.VarChar(32)
+  value       Int     @default(0)
+  rank        Int     @default(0)
+  kills       Int     @default(0)
+  deaths      Int     @default(0)
+  shoots      Int     @default(0)
+  hits        Int     @default(0)
+  headshots   Int     @default(0)
+  assists     Int     @default(0)
+  round_win   Int     @default(0)
+  round_lose  Int     @default(0)
+  playtime    Int     @default(0)
+  lastconnect Int     @default(0)
+}
+
+model miniadmin_admins {
+  id         Int    @id @default(autoincrement())
+  username   String @db.VarChar(255)
+  steamid    String @db.VarChar(255)
+  start_time BigInt
+  end_time   BigInt
+  immunity   Int
+  flags      String @db.VarChar(255)
+}
+
+model miniadmin_bans {
+  id                      Int     @id @default(autoincrement())
+  admin_username          String  @db.VarChar(255)
+  admin_steamid           String  @db.VarChar(255)
+  username                String  @db.VarChar(255)
+  steamid64               BigInt
+  steamid                 String  @db.VarChar(255)
+  reason                  String  @db.VarChar(255)
+  unban_reason            String  @db.VarChar(255)
+  admin_unlocked_username String  @db.VarChar(255)
+  admin_unlocked_steamid  String  @db.VarChar(255)
+  start_ban_time          BigInt
+  end_ban_time            BigInt
+  ban_active              Boolean
+}
+
+model miniadmin_mute {
+  id                      Int     @id @default(autoincrement())
+  mute_type               Int
+  admin_username          String  @db.VarChar(255)
+  admin_steamid           String  @db.VarChar(255)
+  username                String  @db.VarChar(255)
+  steamid64               BigInt
+  steamid                 String  @db.VarChar(255)
+  reason                  String  @db.VarChar(255)
+  unmute_reason           String  @db.VarChar(255)
+  admin_unlocked_username String  @db.VarChar(255)
+  admin_unlocked_steamid  String  @db.VarChar(255)
+  start_mute_time         BigInt
+  end_mute_time           BigInt
+  mute_active             Boolean
+}

@@ -214,7 +214,7 @@ INSERT INTO `trigger` (id, `name`, `fullName`, `mapId`, preview) VALUES
 	 (507,'tower_beam','tower_beam',1,'https://i.imgur.com/SFs6XMdm.png'),
 	 (508,'t2_big_hole_left_platform','t2_big_hole_left_platform',1,'https://i.imgur.com/Z1JZ3SJm.png'),
 	 (509,'ct_spawn_hole_floor','ct_spawn_hole_floor',1,'https://i.imgur.com/OwBTq4Pm.png'),
-	 (510,'\nt2_big_hole_left','\nt2_big_hole_left',1,'https://i.imgur.com/JBJUnS4m.png'),
+	 (510,'\\nt2_big_hole_left','\\nt2_big_hole_left',1,'https://i.imgur.com/JBJUnS4m.png'),
 	 (511,'elevator_window_tip','elevator_window_tip',1,'https://i.imgur.com/HsJ7YGqm.png'),
 	 (512,'t2_left_window_platform','t2_left_window_platform',1,'https://i.imgur.com/QDg7kcsm.png'),
 	 (513,'elevator_window_entrance_floor','elevator_window_entrance_floor',1,'https://i.imgur.com/jLXz0UBm.png'),
@@ -334,7 +334,7 @@ INSERT INTO `trigger` (id, `name`, `fullName`, `mapId`, preview) VALUES
 
 	 
 	--  HNS_PASTEL
-INSERT INTO "trigger" (id,"name","fullName","mapId",preview) VALUES
+INSERT INTO `trigger` (id, `name`, `fullName`, `mapId`, preview) VALUES
 	 (3145,'penek_slant',NULL,3,NULL),
 	 (3146,'penek',NULL,3,NULL),
 	 (3147,'pyramid_slant',NULL,3,NULL),

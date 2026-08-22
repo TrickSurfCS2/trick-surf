@@ -6,7 +6,7 @@ import { DATABASE_URL } from './config'
 const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient }
 
 function createPrismaClient(): PrismaClient {
-  const adapter = new PrismaMariaDb(DATABASE_URL)
+  const adapter = new PrismaMariaDb(DATABASE_URL, { useTextProtocol: true })
   return new PrismaClient({ adapter })
 }
 

@@ -1001,7 +1001,7 @@ INSERT INTO `route` (id, `trickId`, `triggerId`) VALUES
 	 (40535,201,9),
 	 (40536,201,4),
 	 (40537,201,6);
-INSERT INTO "route" (id,"trickId","triggerId")VALUES
+INSERT INTO `route` (id, `trickId`, `triggerId`) VALUES
 	 (40538,202,8),
 	 (40539,202,2),
 	 (40540,202,32),
@@ -2002,7 +2002,7 @@ INSERT INTO "route" (id,"trickId","triggerId")VALUES
 	 (41802,432,43),
 	 (41803,432,35),
 	 (41804,432,61);
-INSERT INTO "route" (id,"trickId","triggerId")VALUES
+INSERT INTO `route` (id, `trickId`, `triggerId`) VALUES
 	 (41805,432,49),
 	 (41806,432,9),
 	 (41807,432,37),
@@ -3003,7 +3003,7 @@ INSERT INTO "route" (id,"trickId","triggerId")VALUES
 	 (45952,746,34),
 	 (45953,746,45),
 	 (45954,746,9);
-INSERT INTO "route" (id,"trickId","triggerId")VALUES
+INSERT INTO `route` (id, `trickId`, `triggerId`) VALUES
 	 (45955,746,123),
 	 (46007,750,8),
 	 (46008,750,2),
@@ -4000,7 +4000,7 @@ INSERT INTO "route" (id,"trickId","triggerId")VALUES
 	 (47590,849,61),
 	 (47591,849,13),
 	 (47592,849,12);
-INSERT INTO "route" (id,"trickId","triggerId")VALUES
+INSERT INTO `route` (id, `trickId`, `triggerId`) VALUES
 	 (47593,849,2),
 	 (47594,849,71),
 	 (47603,851,55),
@@ -4620,7 +4620,7 @@ INSERT INTO "route" (id,"trickId","triggerId")VALUES
 	 (48776,864,428),
 	 (48777,864,120),
 	 (48778,864,8);
-INSERT INTO "route" (id,"trickId","triggerId")VALUES
+INSERT INTO `route` (id, `trickId`, `triggerId`) VALUES
 -- ChinChopa
 	 (3001,3001,3146),
 	 (3002,3001,3155),

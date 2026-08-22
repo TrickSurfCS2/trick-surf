@@ -34,7 +34,10 @@ async function run() {
     try {
       const file = Bun.file(resolve(__dirname, seedFile.path))
       const sql = await file.text()
-      const queries = sql.split(';').map(q => q.trim()).filter(Boolean)
+      const queries = sql
+        .split(';')
+        .map(q => q.replace(/^\s*--.*$/gm, '').replace(/\/\*[\s\S]*?\*\//g, '').trim())
+        .filter(Boolean)
 
       for (const query of queries) {
         await prisma.$executeRawUnsafe(query)

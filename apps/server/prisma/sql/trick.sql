@@ -784,7 +784,7 @@ INSERT INTO `trick` (id, name, point, `startType`, `createdAt`, `authorId`, `map
 	 (66746,'We Hate CC',1350,0,'2023-01-13 04:25:34',2,1),
 	 (66747,'Shaman',950,0,'2023-01-15 17:14:17',39,1);
 
-INSERT INTO "trick" (id,name,point,"startType","createdAt","authorId","mapId") VALUES
+INSERT INTO `trick` (id, name, point, `startType`, `createdAt`, `authorId`, `mapId`) VALUES
 	 (3001,'ChinChopa',300,0,'2021-04-21 11:59:15',1,3),
 	 (3002,'Cabina Return',250,0,'2021-04-21 11:59:15',1,3),
 	 (3003,'Kurasan',250,0,'2021-04-21 11:59:15',1,3),
