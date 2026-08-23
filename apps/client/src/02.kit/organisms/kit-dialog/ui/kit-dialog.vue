@@ -7,9 +7,10 @@ interface Props {
   width?: string
   fullscreen?: boolean
   hideClose?: boolean
+  zIndex?: number
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 
 const visible = defineModel<boolean>({ default: false })
 const { lock, unlock } = useAppScrollLock()
@@ -29,7 +30,12 @@ function close() {
 <template>
   <Teleport to="body">
     <Transition name="fade">
-      <div v-if="visible" class="kit-dialog-backdrop" @click="close" />
+      <div
+        v-if="visible"
+        class="kit-dialog-backdrop"
+        :style="props.zIndex ? { zIndex: props.zIndex } : undefined"
+        @click="close"
+      />
     </Transition>
 
     <Transition name="dialog-warp">
@@ -37,7 +43,7 @@ function close() {
         v-if="visible"
         class="kit-dialog-content"
         :class="{ 'is-fullscreen': fullscreen }"
-        :style="{ width, maxWidth: '92vw' }"
+        :style="{ width, maxWidth: '92vw', ...(props.zIndex ? { zIndex: props.zIndex + 1 } : {}) }"
         role="dialog"
       >
         <div class="kit-dialog-header">

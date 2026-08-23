@@ -3,6 +3,7 @@ export enum AppRouteNames {
   Tricks = 'Tricks',
   Triggers = 'Triggers',
   Records = 'Records',
+  Editor = 'Editor',
   Faq = 'Faq',
   NotFound = 'NotFound',
 }

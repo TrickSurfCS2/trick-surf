@@ -19,6 +19,7 @@ model User {
 
   Trick          Trick[]
   UserPermission UserPermission[]
+  Complete       Complete[]
 
   @@map(name: "user")
 }
@@ -43,9 +44,14 @@ model Complete {
   time  Float
 
   createdAt DateTime  @default(now())
-  TimeWr    TimeWr[]
-  SpeedWr   SpeedWr[]
 
+  User    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Trick   Trick     @relation(fields: [trickId], references: [id], onDelete: Cascade)
+  TimeWr  TimeWr[]
+  SpeedWr SpeedWr[]
+
+  @@index([userId])
+  @@index([trickId])
   @@map(name: "complete")
 }
 
@@ -64,9 +70,10 @@ model Trick {
   User User @relation(fields: [authorId], references: [id], onDelete: Cascade)
   Map  Map  @relation(fields: [mapId], references: [id], onDelete: Cascade)
 
-  Route   Route[]
-  TimeWr  TimeWr[]
-  SpeedWr SpeedWr[]
+  Route    Route[]
+  TimeWr   TimeWr[]
+  SpeedWr  SpeedWr[]
+  Complete Complete[]
 
   @@index([authorId])
   @@index([mapId])
@@ -77,7 +84,7 @@ model Map {
   id       Int     @id @unique @default(autoincrement())
   name     String
   fullName String
-  preview  String?
+  preview  String? @db.MediumText
   origin   Json?
 
   createdAt DateTime @default(now())
@@ -93,7 +100,7 @@ model Trigger {
   id       Int     @id @unique @default(autoincrement())
   name     String
   fullName String?
-  preview  String?
+  preview  String? @db.MediumText
   coords   Json?
 
   mapId Int

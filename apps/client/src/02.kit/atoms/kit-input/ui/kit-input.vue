@@ -194,14 +194,11 @@ function clear() {
     opacity: 1;
   }
 
-  &:focus {
-    border-color: var(--fg-accent-color);
-  }
-
+  &:focus,
   &:focus-visible {
-    outline: 2px solid var(--fg-accent-color);
-    outline-offset: 1px;
+    outline: none;
     border-color: var(--fg-accent-color);
+    box-shadow: 0 0 0 1px var(--fg-accent-color);
   }
 
   &--size-xs {

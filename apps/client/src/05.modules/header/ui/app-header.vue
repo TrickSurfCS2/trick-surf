@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue'
+import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { useChangeTheme } from '~/01.shared/composables/use-change-theme'
 import { ThemesVariant } from '~/01.shared/constants/themes'
@@ -9,11 +10,24 @@ const emit = defineEmits<{
 }>()
 
 const router = useRouter()
+const { locale } = useI18n()
 const { theme, toggleTheme } = useChangeTheme()
 
 const themeIcons: Record<ThemesVariant, string> = {
   [ThemesVariant.Dark]: 'mdi:weather-night',
   [ThemesVariant.Light]: 'mdi:white-balance-sunny',
+}
+
+function toggleLanguage() {
+  const nextLocale = locale.value === 'ru' ? 'en' : 'ru'
+  locale.value = nextLocale
+  if (typeof localStorage !== 'undefined') {
+    localStorage.setItem('global-app-language', nextLocale)
+  }
+
+  if (typeof document !== 'undefined') {
+    document.querySelector('html')?.setAttribute('lang', nextLocale)
+  }
 }
 </script>
 
@@ -36,6 +50,16 @@ const themeIcons: Record<ThemesVariant, string> = {
       </div>
 
       <div class="header-right">
+        <button
+          type="button"
+          class="header-lang-btn"
+          :title="`Language: ${locale.toUpperCase()}`"
+          @click="toggleLanguage"
+        >
+          <Icon icon="mdi:translate" class="lang-icon" />
+          <span class="lang-text">{{ locale.toUpperCase() }}</span>
+        </button>
+
         <button
           type="button"
           class="header-icon-btn"
@@ -97,6 +121,32 @@ const themeIcons: Record<ThemesVariant, string> = {
   &:hover {
     color: var(--fg-accent-color);
     background-color: var(--bg-hover-color);
+  }
+}
+
+.header-lang-btn {
+  background: none;
+  border: 1px solid var(--border-primary-color);
+  color: var(--fg-primary-color);
+  padding: 4px 8px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: var(--fg-accent-color);
+    border-color: var(--fg-accent-color);
+    background-color: var(--bg-hover-color);
+  }
+
+  .lang-icon {
+    font-size: 1rem;
   }
 }
 

@@ -15,6 +15,22 @@ export interface GetTriggerParams {
   fullName?: string
 }
 
+export interface CreateTriggerDto {
+  name: string
+  fullName?: string | null
+  preview?: string | null
+  coords?: number[]
+  mapId: number
+}
+
+export interface UpdateTriggerDto {
+  name?: string
+  fullName?: string | null
+  preview?: string | null
+  coords?: number[]
+  mapId?: number
+}
+
 export interface GetTrickListParams {
   mapId?: number
 }

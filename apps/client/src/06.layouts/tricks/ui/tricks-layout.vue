@@ -21,6 +21,8 @@ watch(() => [mapParam.value, mapStore.maps], ([name]) => {
 
 const currentSection = computed(() => {
   const path = route.path
+  if (path.includes('/editor'))
+    return 'editor'
   if (path.includes('/triggers'))
     return 'triggers'
   if (path.includes('/records'))
@@ -98,6 +100,15 @@ function navigateToSection(section: string) {
           @click="navigateToSection('records')"
         >
           records
+        </button>
+        <span class="sections-sep">|</span>
+        <button
+          type="button"
+          class="sections-item sections-item--accent"
+          :class="{ 'is-active': currentSection === 'editor' }"
+          @click="navigateToSection('editor')"
+        >
+          editor
         </button>
       </div>
     </div>

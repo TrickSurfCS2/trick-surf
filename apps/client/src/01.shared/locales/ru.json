@@ -12,6 +12,7 @@
     "Tricks": "Трики",
     "Triggers": "Триггеры",
     "Records": "Рекорды",
+    "Editor": "Редактор",
     "Faq": "FAQ",
     "NotFound": "404 Не найдено"
   },
@@ -31,7 +32,7 @@
       "triggers": {
         "title": "Триггеры",
         "badge": "Зоны & Координаты",
-        "desc": "Интерактивный список зон, чекпоинтов и триггеров для каждой локации карты.",
+        "desc": "Интерактивный список зон и триггеров для каждой локации карты.",
         "action": "Изучить триггеры"
       },
       "records": {
@@ -39,6 +40,12 @@
         "badge": "Speed & Time WR",
         "desc": "Таблица лидеров по максимальной скорости и наилучшему времени выполнения триков.",
         "action": "Таблица рекордов"
+      },
+      "editor": {
+        "title": "Редактор",
+        "badge": "Трюки & Зоны",
+        "desc": "Конструктор новых трюков, управление триггерами карты, редактирование маршрутов и экспорт.",
+        "action": "Открыть редактор"
       },
       "faq": {
         "title": "FAQ & Гайды",
@@ -59,9 +66,141 @@
     "tricks": "Трики",
     "triggers": "Триггеры",
     "records": "Рекорды",
+    "editor": "Редактор трюков & зон",
     "faq": "FAQ",
     "selectMap": "Выберите карту",
     "connectServer": "Подключиться к серверу"
+  },
+  "editor": {
+    "title": "Редактор карты",
+    "subtitle": "Создание и редактирование трюков, триггеров и маршрутов",
+    "tabs": {
+      "tricks": "Трюки",
+      "triggers": "Триггеры & Зоны",
+      "routeBuilder": "Конструктор маршрутов",
+      "importExport": "Импорт / Экспорт"
+    },
+    "workspace": {
+      "searchPlaceholder": "Поиск по названию или автору...",
+      "loading": "Загрузка трюков карты...",
+      "noTricksFound": "Нет трюков, подходящих под критерии поиска.",
+      "deleteTrickTitle": "Удалить трюк",
+      "deleteTriggerTitle": "Удалить триггер"
+    },
+    "sort": {
+      "index": "Сортировка: # Индекс",
+      "name": "Сортировка: Имя (А-Я)",
+      "points": "Сортировка: Очки (Убыв.)",
+      "length": "Сортировка: Длина маршрута"
+    },
+    "actions": {
+      "newTrick": "Создать трюк",
+      "newTrigger": "Создать триггер",
+      "edit": "Редактировать",
+      "duplicate": "Дублировать",
+      "delete": "Удалить",
+      "save": "Сохранить",
+      "cancel": "Отмена",
+      "create": "Создать",
+      "clear": "Очистить",
+      "reverseRoute": "Развернуть",
+      "clearRoute": "Очистить",
+      "addStep": "Добавить точку",
+      "autoName": "Авто-имя",
+      "exportJson": "Экспорт JSON",
+      "importJson": "Импорт JSON",
+      "copyJson": "Копировать JSON",
+      "downloadJson": "Скачать JSON",
+      "filterAll": "Все",
+      "filterPre": "Только Pre-Strafe",
+      "filterUnlimited": "Только Unlimited"
+    },
+    "trick": {
+      "createTitle": "Создать трюк",
+      "editTitle": "Редактировать трюк",
+      "nameLabel": "Название трюка",
+      "namePlaceholder": "Например: Spawn to Water или Ramp 1 -> Ramp 2",
+      "pointsLabel": "Очки за выполнение (Points)",
+      "startTypeLabel": "Режим трюка",
+      "startTypeUnlimited": "Unlimited (Свободная скорость)",
+      "startTypePre": "Pre-Strafe (Скорость <= 405)",
+      "authorLabel": "Автор трюка",
+      "authorPlaceholder": "Ваш никнейм или SteamID",
+      "routeSection": "Маршрут трюка (Последовательность зон)",
+      "routeEmpty": "В маршруте пока нет зон. Выберите или добавьте триггеры ниже.",
+      "routeHint": "Перемещайте шаги вверх/вниз для построения точной траектории прохождения.",
+      "step": "Шаг",
+      "startTrigger": "СТАРТ",
+      "finishTrigger": "ФИНИШ",
+      "checkpoint": "ТОЧКА",
+      "preview": "Предпросмотр трюка",
+      "saveSuccess": "Трюк успешно сохранен!",
+      "deleteConfirm": "Вы уверены, что хотите удалить трюк «{name}»?",
+      "deleteSuccess": "Трюк удален",
+      "duplicateSuccess": "Копия трюка создана!"
+    },
+    "trigger": {
+      "createTitle": "Создать триггер",
+      "editTitle": "Редактировать триггер",
+      "searchPlaceholder": "Поиск триггеров по названию или описанию...",
+      "nameLabel": "Короткий код / Название зоны",
+      "namePlaceholder": "Например: spawn, ramp1, water, secret_room",
+      "fullNameLabel": "Полное описание / Локация",
+      "fullNamePlaceholder": "Например: Верхняя стартовая платформа",
+      "previewLabel": "URL превью изображения",
+      "previewPlaceholder": "https://... или /image/triggers/...",
+      "uploadImage": "Загрузить фото",
+      "coordsLabel": "Координаты зоны (X, Y, Z)",
+      "pasteConsoleHint": "Вставить из CS2 консоли (setpos X Y Z):",
+      "pasteConsolePlaceholder": "Вставьте setpos команду или координаты...",
+      "usedInTricks": "Используется в трюках:",
+      "usedInCount": "Используется в {count} трюках",
+      "copyCoordsHint": "Нажмите, чтобы скопировать команду setpos",
+      "coordsCopied": "Координаты скопированы",
+      "noTriggers": "На этой карте пока нет созданных триггеров.",
+      "notUsed": "Пока не используется ни в одном трюке",
+      "saveSuccess": "Триггер успешно сохранен!",
+      "deleteConfirm": "Вы уверены, что хотите удалить триггер «{name}»?",
+      "deleteWarning": "Внимание! Этот триггер используется в {count} трюках. Он будет удален из всех маршрутов.",
+      "deleteSuccess": "Триггер удален"
+    },
+    "builder": {
+      "triggersCount": "{count} триггер | {count} триггера | {count} триггеров",
+      "filterPlaceholder": "Поиск триггеров для добавления...",
+      "noTriggersFound": "Триггеры не найдены"
+    },
+    "studio": {
+      "title": "Интерактивный конструктор маршрутов",
+      "desc": "Соберите пользовательскую траекторию из триггеров карты и сохраните её как официальный трюк.",
+      "saveAsTrick": "Сохранить маршрут как трюк",
+      "emptyRoute": "Маршрут пуст. Сначала добавьте хотя бы один триггер."
+    },
+    "stats": {
+      "totalTricks": "Всего трюков",
+      "totalTricksSub": "{pre} Pre / {unl} Unl",
+      "totalTriggers": "Всего триггеров",
+      "totalTriggersSub": "Зон на карте",
+      "avgLength": "Средняя длина",
+      "avgLengthSub": "триггеров/трюк",
+      "pointsPool": "Пул очков",
+      "pointsPoolSub": "Общий счет карты",
+      "preStrafeCount": "Pre-Strafe",
+      "unlimitedCount": "Unlimited"
+    },
+    "importExport": {
+      "title": "Импорт и Экспорт данных",
+      "exportDesc": "Экспортируйте трюки и триггеры текущей карты в формате JSON для резервной копии или переноса.",
+      "importDesc": "Вставьте JSON или загрузите файл со структурой трюков и триггеров.",
+      "selectFile": "Выбрать .json файл",
+      "pastePlaceholder": "Вставьте JSON сюда...",
+      "tricksCount": "Трюков",
+      "triggersCount": "Триггеров",
+      "importMode": "Режим импорта:",
+      "importAppend": "Добавить к существующим",
+      "importOverwrite": "Перезаписать данные карты",
+      "importSuccess": "Данные успешно импортированы!",
+      "importError": "Неверный формат JSON файла."
+    }
   },
   "tricks": {
     "index": "#",
@@ -85,9 +224,59 @@
     "loading": "Загрузка триггеров..."
   },
   "records": {
-    "title": "Рекорды",
+    "title": "Рекорды и лидерборды",
     "inDevelopment": "В РАЗРАБОТКЕ",
-    "soon": "Скоро здесь появится таблица лидеров и рекордов."
+    "soon": "Скоро здесь появится таблица лидеров и рекордов.",
+    "tabs": {
+      "tricks": "Рекорды по трикам",
+      "leaderboard": "Топ игроков",
+      "recent": "Недавние прохождения"
+    },
+    "stats": {
+      "totalCompletes": "Всего прохождений",
+      "totalTricks": "Триков на карте",
+      "activePlayers": "Активных игроков",
+      "topPlayer": "Лидер по очкам",
+      "topWrHolder": "Лидер по WR"
+    },
+    "table": {
+      "rank": "#",
+      "trick": "Трик",
+      "points": "Очки",
+      "completes": "Прохождений",
+      "timeWr": "Время WR",
+      "speedWr": "Скорость WR",
+      "player": "Игрок",
+      "date": "Дата",
+      "speed": "Скорость",
+      "time": "Время",
+      "mode": "Режим",
+      "rankByTime": "Место (время)",
+      "rankBySpeed": "Место (скорость)",
+      "noRecords": "Нет рекордов, соответствующих критериям фильтра.",
+      "noCompletes": "На этой карте пока нет сохраненных прохождений.",
+      "viewCompletes": "Все раны",
+      "timeWrCount": "Time WRs",
+      "speedWrCount": "Speed WRs",
+      "totalWrs": "Всего WR"
+    },
+    "dialog": {
+      "title": "Прохождения: {name}",
+      "subtitle": "Все зафиксированные результаты игроков по данному трику",
+      "totalRuns": "{count} прохождений",
+      "sortByTime": "По лучшему времени",
+      "sortBySpeed": "По максимальной скорости",
+      "sortByDate": "Сначала свежие"
+    },
+    "filters": {
+      "searchTricks": "Поиск по названию трика или игроку...",
+      "searchPlayers": "Поиск по никнейму или SteamID...",
+      "searchRecent": "Поиск по недавним прохождениям...",
+      "allModes": "Все режимы",
+      "preStrafe": "Только Pre-Strafe",
+      "unlimited": "Только Unlimited"
+    },
+    "loading": "Загрузка рекордов и лидерборда..."
   },
   "faq": {
     "title": "FAQ",

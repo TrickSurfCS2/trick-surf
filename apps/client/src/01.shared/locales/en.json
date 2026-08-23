@@ -12,6 +12,7 @@
     "Tricks": "Tricks",
     "Triggers": "Triggers",
     "Records": "Records",
+    "Editor": "Editor",
     "Faq": "FAQ",
     "NotFound": "404 Not Found"
   },
@@ -40,6 +41,12 @@
         "desc": "Leaderboards for top speed and fastest completion times across all tricks.",
         "action": "View Leaderboard"
       },
+      "editor": {
+        "title": "Map Editor",
+        "badge": "Tricks & Zones",
+        "desc": "Create and edit custom trick routes, manage map trigger zones, and export data.",
+        "action": "Open Editor"
+      },
       "faq": {
         "title": "FAQ & Guides",
         "badge": "Rules & Commands",
@@ -59,9 +66,141 @@
     "tricks": "Tricks",
     "triggers": "Triggers",
     "records": "Records",
+    "editor": "Tricks & Triggers Editor",
     "faq": "FAQ",
     "selectMap": "Select Map",
     "connectServer": "Connect to server"
+  },
+  "editor": {
+    "title": "Map Editor",
+    "subtitle": "Create and edit tricks, trigger zones, and route sequences",
+    "tabs": {
+      "tricks": "Tricks",
+      "triggers": "Triggers & Zones",
+      "routeBuilder": "Route Studio",
+      "importExport": "Import / Export"
+    },
+    "workspace": {
+      "searchPlaceholder": "Search by trick name or author...",
+      "loading": "Loading map tricks...",
+      "noTricksFound": "No tricks match your search/filter criteria.",
+      "deleteTrickTitle": "Delete Trick",
+      "deleteTriggerTitle": "Delete Trigger"
+    },
+    "sort": {
+      "index": "Sort: # Index",
+      "name": "Sort: Name (A-Z)",
+      "points": "Sort: Points (High-Low)",
+      "length": "Sort: Route Length"
+    },
+    "actions": {
+      "newTrick": "New Trick",
+      "newTrigger": "New Trigger",
+      "edit": "Edit",
+      "duplicate": "Duplicate",
+      "delete": "Delete",
+      "save": "Save",
+      "cancel": "Cancel",
+      "create": "Create",
+      "clear": "Clear",
+      "reverseRoute": "Reverse",
+      "clearRoute": "Clear",
+      "addStep": "Add Step",
+      "autoName": "Auto-Name",
+      "exportJson": "Export JSON",
+      "importJson": "Import JSON",
+      "copyJson": "Copy JSON",
+      "downloadJson": "Download JSON",
+      "filterAll": "All",
+      "filterPre": "Pre-Strafe Only",
+      "filterUnlimited": "Unlimited Only"
+    },
+    "trick": {
+      "createTitle": "Create Trick",
+      "editTitle": "Edit Trick",
+      "nameLabel": "Trick Name",
+      "namePlaceholder": "E.g. Spawn to Water or Ramp 1 -> Ramp 2",
+      "pointsLabel": "Difficulty Points",
+      "startTypeLabel": "Trick Mode",
+      "startTypeUnlimited": "Unlimited (Free speed)",
+      "startTypePre": "Pre-Strafe (Speed <= 405)",
+      "authorLabel": "Author",
+      "authorPlaceholder": "Your nickname or SteamID",
+      "routeSection": "Trick Route (Ordered checkpoints)",
+      "routeEmpty": "No triggers in route yet. Select or add checkpoints below.",
+      "routeHint": "Reorder steps up/down to configure the exact path trajectory.",
+      "step": "Step",
+      "startTrigger": "START",
+      "finishTrigger": "FINISH",
+      "checkpoint": "CHECKPOINT",
+      "preview": "Live Trick Preview",
+      "saveSuccess": "Trick saved successfully!",
+      "deleteConfirm": "Are you sure you want to delete trick «{name}»?",
+      "deleteSuccess": "Trick deleted",
+      "duplicateSuccess": "Trick duplicated!"
+    },
+    "trigger": {
+      "createTitle": "Create Trigger",
+      "editTitle": "Edit Trigger",
+      "searchPlaceholder": "Search triggers by name or location...",
+      "nameLabel": "Zone Code / Short Name",
+      "namePlaceholder": "E.g. spawn, ramp1, water, secret_room",
+      "fullNameLabel": "Full Description / Location",
+      "fullNamePlaceholder": "E.g. Top Starting Platform",
+      "previewLabel": "Preview Image URL",
+      "previewPlaceholder": "https://... or /image/triggers/...",
+      "uploadImage": "Upload Image",
+      "coordsLabel": "Coordinates (X, Y, Z)",
+      "pasteConsoleHint": "Paste from CS2 console (setpos X Y Z):",
+      "pasteConsolePlaceholder": "Paste setpos command or coordinates...",
+      "usedInTricks": "Used in tricks:",
+      "usedInCount": "Used in {count} tricks",
+      "copyCoordsHint": "Click to copy setpos command",
+      "coordsCopied": "Coordinates copied",
+      "noTriggers": "No triggers found for this map.",
+      "notUsed": "Not used in any trick yet",
+      "saveSuccess": "Trigger saved successfully!",
+      "deleteConfirm": "Are you sure you want to delete trigger «{name}»?",
+      "deleteWarning": "Warning! This trigger is used in {count} tricks. It will be removed from all associated routes.",
+      "deleteSuccess": "Trigger deleted"
+    },
+    "builder": {
+      "triggersCount": "{count} trigger | {count} triggers",
+      "filterPlaceholder": "Filter triggers to append...",
+      "noTriggersFound": "No triggers found"
+    },
+    "studio": {
+      "title": "Interactive Route Studio",
+      "desc": "Assemble a custom trajectory by sequencing triggers, then convert it into an official Trick.",
+      "saveAsTrick": "Save Route as Trick",
+      "emptyRoute": "Route is empty. Add at least one trigger first."
+    },
+    "stats": {
+      "totalTricks": "Total Tricks",
+      "totalTricksSub": "{pre} Pre / {unl} Unl",
+      "totalTriggers": "Total Triggers",
+      "totalTriggersSub": "Zones on map",
+      "avgLength": "Avg Length",
+      "avgLengthSub": "triggers/trick",
+      "pointsPool": "Points Pool",
+      "pointsPoolSub": "Total map score",
+      "preStrafeCount": "Pre-Strafe",
+      "unlimitedCount": "Unlimited"
+    },
+    "importExport": {
+      "title": "Import and Export Data",
+      "exportDesc": "Export all tricks and triggers for the current map in JSON format for backup or migration.",
+      "importDesc": "Paste JSON or upload a file containing tricks and triggers structure.",
+      "selectFile": "Select .json file",
+      "pastePlaceholder": "Paste JSON here...",
+      "tricksCount": "Tricks",
+      "triggersCount": "Triggers",
+      "importMode": "Import Mode:",
+      "importAppend": "Append to existing",
+      "importOverwrite": "Overwrite map data",
+      "importSuccess": "Data imported successfully!",
+      "importError": "Invalid JSON format."
+    }
   },
   "tricks": {
     "index": "#",
@@ -85,9 +224,59 @@
     "loading": "Loading triggers..."
   },
   "records": {
-    "title": "Records",
+    "title": "Records & Leaderboard",
     "inDevelopment": "IN DEVELOPMENT",
-    "soon": "Leaderboards and records table coming soon."
+    "soon": "Leaderboards and records table coming soon.",
+    "tabs": {
+      "tricks": "Trick Records",
+      "leaderboard": "Player Rankings",
+      "recent": "Recent Activity"
+    },
+    "stats": {
+      "totalCompletes": "Total Completes",
+      "totalTricks": "Tricks on Map",
+      "activePlayers": "Active Players",
+      "topPlayer": "Top Player",
+      "topWrHolder": "Top WR Holder"
+    },
+    "table": {
+      "rank": "#",
+      "trick": "Trick",
+      "points": "Points",
+      "completes": "Completes",
+      "timeWr": "Time WR",
+      "speedWr": "Speed WR",
+      "player": "Player",
+      "date": "Date",
+      "speed": "Speed",
+      "time": "Time",
+      "mode": "Mode",
+      "rankByTime": "Time Rank",
+      "rankBySpeed": "Speed Rank",
+      "noRecords": "No records match your filter criteria.",
+      "noCompletes": "No completions recorded yet for this map.",
+      "viewCompletes": "View Runs",
+      "timeWrCount": "Time WRs",
+      "speedWrCount": "Speed WRs",
+      "totalWrs": "Total WRs"
+    },
+    "dialog": {
+      "title": "Completions: {name}",
+      "subtitle": "All player runs recorded for this trick",
+      "totalRuns": "{count} total runs",
+      "sortByTime": "Fastest Time",
+      "sortBySpeed": "Highest Speed",
+      "sortByDate": "Latest Runs"
+    },
+    "filters": {
+      "searchTricks": "Search trick name or record holder...",
+      "searchPlayers": "Search player or SteamID...",
+      "searchRecent": "Search recent completes...",
+      "allModes": "All Modes",
+      "preStrafe": "Pre-Strafe Only",
+      "unlimited": "Unlimited Only"
+    },
+    "loading": "Loading records and leaderboards..."
   },
   "faq": {
     "title": "FAQ",

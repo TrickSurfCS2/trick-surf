@@ -6,6 +6,7 @@ export interface TrickItem {
   name: string
   point: number
   startType: number
+  mapId?: number
   totalCompletes?: number
   trickLength?: number
   createdAt: string | Date
@@ -14,6 +15,25 @@ export interface TrickItem {
   routeIds?: string
   route?: string
   triggers?: TriggerItem[]
+}
+
+export interface CreateTrickDto {
+  name: string
+  point: number
+  startType?: number
+  mapId: number
+  authorUsername?: string
+  authorSteamid?: string
+  triggerIds?: number[]
+}
+
+export interface UpdateTrickDto {
+  name?: string
+  point?: number
+  startType?: number
+  mapId?: number
+  authorUsername?: string
+  triggerIds?: number[]
 }
 
 export type TrickSortKey = 'index' | 'name' | 'point' | 'trickLength' | 'totalCompletes'

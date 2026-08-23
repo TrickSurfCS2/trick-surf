@@ -2,6 +2,7 @@ import { staticPlugin } from '@elysiajs/static'
 import { swagger } from '@elysiajs/swagger'
 import { Elysia } from 'elysia'
 import { mapController } from './controllers/map.controller'
+import { recordController } from './controllers/record.controller'
 import { trickController } from './controllers/trick.controller'
 import { triggerController } from './controllers/trigger.controller'
 import { userController } from './controllers/user.controller'
@@ -32,6 +33,7 @@ export const app = new Elysia()
   .use(trickController)
   .use(triggerController)
   .use(userController)
+  .use(recordController)
   .get('/health', () => ({ status: 'ok' }))
   .get('/logs', () => ({ status: 'ok', timestamp: new Date().toISOString() }))
 

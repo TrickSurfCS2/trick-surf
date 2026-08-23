@@ -71,6 +71,7 @@ function handleError() {
 .kit-image-img {
   width: 100%;
   height: 100%;
+  object-fit: cover;
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
 

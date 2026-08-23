@@ -2,12 +2,14 @@ import type { InjectionKey } from 'vue'
 import { hasInjectionContext, inject } from 'vue'
 import { authRepository } from '~/01.shared/repositories/auth.repository'
 import { mapRepository } from '~/01.shared/repositories/map.repository'
+import { recordRepository } from '~/01.shared/repositories/record.repository'
 import { trickRepository } from '~/01.shared/repositories/trick.repository'
 import { triggerRepository } from '~/01.shared/repositories/trigger.repository'
 
 export interface Repositories {
   auth: typeof authRepository
   map: typeof mapRepository
+  record: typeof recordRepository
   trick: typeof trickRepository
   trigger: typeof triggerRepository
 }
@@ -15,6 +17,7 @@ export interface Repositories {
 export const defaultRepositories: Repositories = {
   auth: authRepository,
   map: mapRepository,
+  record: recordRepository,
   trick: trickRepository,
   trigger: triggerRepository,
 }

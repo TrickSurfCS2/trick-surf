@@ -82,7 +82,7 @@ function openPreview(imgUrl?: string | null) {
               <span class="route-trigger-name">{{ trigger.name }}</span>
             </div>
             <div class="route-trigger-preview">
-              <KitImage :src="getMediaUrl(trigger.preview)" :alt="trigger.name" height="130px" />
+              <KitImage :src="getMediaUrl(trigger.preview)" :alt="trigger.name" height="100%" />
             </div>
           </div>
         </div>
@@ -257,7 +257,8 @@ function openPreview(imgUrl?: string | null) {
 }
 
 .route-trigger-preview {
-  height: 110px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   overflow: hidden;
 }
 

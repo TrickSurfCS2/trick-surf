@@ -45,6 +45,16 @@ export const router = createRouter({
       meta: { layout: 'tricks' },
     },
     {
+      path: '/:map/editor',
+      name: AppRouteNames.Editor,
+      component: async () => import('~/07.views/editor.vue'),
+      meta: { layout: 'tricks' },
+    },
+    {
+      path: '/editor',
+      redirect: '/surf_ski_2_go/editor',
+    },
+    {
       path: '/:pathMatch(.*)*',
       name: AppRouteNames.NotFound,
       component: async () => import('~/07.views/not-found.vue'),

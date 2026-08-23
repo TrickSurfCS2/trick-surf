@@ -47,6 +47,14 @@ function navigateTo(path: string) {
             <Icon icon="mdi:home" class="nav-item-icon" />
             <span class="nav-item-text">{{ t('nav.home') }}</span>
           </li>
+          <li
+            class="nav-item"
+            :class="{ 'is-selected': $route.path.includes('/editor') }"
+            @click="navigateTo(`/${mapStore.selectedMap?.name || 'surf_ski_2_go'}/editor`)"
+          >
+            <Icon icon="mdi:pencil-ruler" class="nav-item-icon" />
+            <span class="nav-item-text">{{ t('nav.editor') }}</span>
+          </li>
           <li class="nav-item" @click="navigateTo('/faq')">
             <Icon icon="mdi:help-circle-outline" class="nav-item-icon" />
             <span class="nav-item-text">{{ t('nav.faq') }}</span>

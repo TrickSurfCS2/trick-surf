@@ -54,8 +54,8 @@ function select(option: SelectOption) {
       @click="isOpen = !isOpen"
     >
       <span class="kit-select-label">
-        <Icon v-if="selectedOption?.icon" :icon="selectedOption.icon" class="kit-select-icon mr-2" />
-        {{ selectedOption?.label || placeholder }}
+        <Icon v-if="selectedOption?.icon" :icon="selectedOption.icon" class="kit-select-icon" />
+        <span class="kit-select-text">{{ selectedOption?.label || placeholder }}</span>
       </span>
       <Icon icon="mdi:chevron-down" class="kit-select-arrow" :class="{ 'is-rotated': isOpen }" />
     </button>
@@ -79,7 +79,7 @@ function select(option: SelectOption) {
             :class="{ 'is-selected': option.value === modelValue }"
             @click="select(option)"
           >
-            <Icon v-if="option.icon" :icon="option.icon" class="mr-2" />
+            <Icon v-if="option.icon" :icon="option.icon" class="kit-select-icon" />
             <span>{{ option.label }}</span>
           </div>
         </div>
@@ -100,6 +100,7 @@ function select(option: SelectOption) {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 8px;
   padding: 8px 12px;
   border-radius: 6px;
   background-color: var(--bg-secondary-color);
@@ -108,16 +109,41 @@ function select(option: SelectOption) {
   font-size: 0.875rem;
   cursor: pointer;
   transition: border-color 0.2s ease;
+  min-height: 38px;
+  box-sizing: border-box;
 
   &:hover {
     border-color: var(--fg-accent-color);
   }
 }
 
+.kit-select-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+  text-align: left;
+}
+
+.kit-select-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.kit-select-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
 .kit-select-arrow {
   transition: transform 0.2s ease;
   font-size: 1.25rem;
   color: var(--fg-secondary-color);
+  flex-shrink: 0;
 
   &.is-rotated {
     transform: rotate(180deg);
@@ -139,11 +165,13 @@ function select(option: SelectOption) {
 .kit-select-item {
   display: flex;
   align-items: center;
+  gap: 6px;
   padding: 8px 10px;
   border-radius: 6px;
   font-size: 0.85rem;
   cursor: pointer;
   color: var(--fg-primary-color);
+  white-space: nowrap;
 
   &:hover {
     background-color: var(--bg-hover-color);

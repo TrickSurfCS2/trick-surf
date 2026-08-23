@@ -1,4 +1,5 @@
 export * from './map'
+export * from './record'
 export * from './toast'
 export * from './trick'
 export * from './trigger'

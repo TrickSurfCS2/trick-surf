@@ -139,7 +139,7 @@ function openPreview(imgUrl: string | null) {
 
 .trigger-image-wrapper {
   width: 100%;
-  height: 180px;
+  aspect-ratio: 1 / 1;
   border-radius: 6px;
   overflow: hidden;
 }

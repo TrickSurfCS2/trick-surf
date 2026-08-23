@@ -24,6 +24,9 @@ export class TrickService {
           include: {
             Trigger: true,
           },
+          orderBy: {
+            id: 'asc',
+          },
         },
       },
       where: {
@@ -80,6 +83,133 @@ export class TrickService {
     `
 
     return result[0] ?? null
+  }
+
+  createTrick = async (data: {
+    name: string
+    point: number
+    startType?: number
+    mapId: number
+    authorId?: number
+    authorSteamid?: string
+    authorUsername?: string
+    triggerIds?: number[]
+  }) => {
+    let authorId = data.authorId
+
+    if (!authorId && data.authorSteamid) {
+      const user = await prisma.user.upsert({
+        where: { steamid: data.authorSteamid },
+        update: { username: data.authorUsername || 'Unknown' },
+        create: {
+          steamid: data.authorSteamid,
+          username: data.authorUsername || 'Unknown',
+        },
+      })
+      authorId = user.id
+    }
+
+    if (!authorId) {
+      const existingUser = await prisma.user.findFirst()
+      if (existingUser) {
+        authorId = existingUser.id
+      }
+      else {
+        const createdUser = await prisma.user.create({
+          data: {
+            steamid: '76561198000000000',
+            username: data.authorUsername || 'TrickMaker',
+          },
+        })
+        authorId = createdUser.id
+      }
+    }
+
+    const trick = await prisma.trick.create({
+      data: {
+        name: data.name,
+        point: Number(data.point),
+        startType: Number(data.startType ?? 0),
+        mapId: Number(data.mapId),
+        authorId: authorId!,
+      },
+    })
+
+    if (data.triggerIds && data.triggerIds.length > 0) {
+      await prisma.route.createMany({
+        data: data.triggerIds.map(triggerId => ({
+          trickId: trick.id,
+          triggerId: Number(triggerId),
+        })),
+      })
+    }
+
+    const list = await this.getList({ mapId: data.mapId })
+    return list.find((t: { id: number }) => t.id === trick.id) || trick
+  }
+
+  updateTrick = async (id: number, data: {
+    name?: string
+    point?: number
+    startType?: number
+    mapId?: number
+    authorUsername?: string
+    triggerIds?: number[]
+  }) => {
+    const trick = await prisma.trick.update({
+      where: { id: Number(id) },
+      data: {
+        ...(data.name !== undefined ? { name: data.name } : {}),
+        ...(data.point !== undefined ? { point: Number(data.point) } : {}),
+        ...(data.startType !== undefined ? { startType: Number(data.startType) } : {}),
+        ...(data.mapId !== undefined ? { mapId: Number(data.mapId) } : {}),
+      },
+      include: {
+        User: true,
+      },
+    })
+
+    if (data.authorUsername && trick.authorId) {
+      await prisma.user.update({
+        where: { id: trick.authorId },
+        data: { username: data.authorUsername },
+      }).catch(() => {})
+    }
+
+    if (data.triggerIds !== undefined) {
+      await prisma.route.deleteMany({
+        where: { trickId: Number(id) },
+      })
+      if (data.triggerIds.length > 0) {
+        await prisma.route.createMany({
+          data: data.triggerIds.map(triggerId => ({
+            trickId: Number(id),
+            triggerId: Number(triggerId),
+          })),
+        })
+      }
+    }
+
+    const list = await this.getList({ mapId: trick.mapId })
+    return list.find((t: { id: number }) => t.id === Number(id)) || trick
+  }
+
+  deleteTrick = async (id: number) => {
+    await prisma.route.deleteMany({
+      where: { trickId: Number(id) },
+    }).catch(() => {})
+
+    await prisma.timeWr.deleteMany({
+      where: { trickId: Number(id) },
+    }).catch(() => {})
+
+    await prisma.speedWr.deleteMany({
+      where: { trickId: Number(id) },
+    }).catch(() => {})
+
+    return prisma.trick.delete({
+      where: { id: Number(id) },
+    })
   }
 
   //* Update

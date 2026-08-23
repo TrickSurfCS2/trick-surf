@@ -1,9 +1,16 @@
 import type {
+  CreateTrickDto,
+  CreateTriggerDto,
   GetTrickListParams,
   GetTriggerParams,
   MapItem,
+  MapRecordsResponse,
+  PlayerLeaderboardEntry,
+  TrickCompletesResponse,
   TrickItem,
   TriggerItem,
+  UpdateTrickDto,
+  UpdateTriggerDto,
   UserItem,
 } from '~/01.shared/types/models'
 import { ofetch } from 'ofetch'
@@ -95,10 +102,48 @@ export const api = {
       request<TrickItem[]>('/api/v1/trick/list', {
         query: params,
       }),
+    create: async (body: CreateTrickDto) =>
+      request<TrickItem>('/api/v1/trick', {
+        method: 'POST',
+        body,
+      }),
+    update: async (id: number, body: UpdateTrickDto) =>
+      request<TrickItem>(`/api/v1/trick/${id}`, {
+        method: 'PUT',
+        body,
+      }),
+    delete: async (id: number) =>
+      request<{ id: number }>(`/api/v1/trick/${id}`, {
+        method: 'DELETE',
+      }),
   },
   trigger: {
     list: async (params?: GetTriggerParams) =>
       request<TriggerItem[]>('/api/v1/trigger', {
+        query: params,
+      }),
+    create: async (body: CreateTriggerDto) =>
+      request<TriggerItem>('/api/v1/trigger', {
+        method: 'POST',
+        body,
+      }),
+    update: async (id: number, body: UpdateTriggerDto) =>
+      request<TriggerItem>(`/api/v1/trigger/${id}`, {
+        method: 'PUT',
+        body,
+      }),
+    delete: async (id: number) =>
+      request<{ id: number }>(`/api/v1/trigger/${id}`, {
+        method: 'DELETE',
+      }),
+  },
+  record: {
+    getMapRecords: async (mapId: number) =>
+      request<MapRecordsResponse>(`/api/v1/records/map/${mapId}`),
+    getTrickCompletes: async (trickId: number) =>
+      request<TrickCompletesResponse>(`/api/v1/records/trick/${trickId}`),
+    getLeaderboard: async (params?: { mapId?: number, limit?: number }) =>
+      request<PlayerLeaderboardEntry[]>('/api/v1/records/leaderboard', {
         query: params,
       }),
   },

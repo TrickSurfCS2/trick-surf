@@ -8,6 +8,24 @@ const savedLanguage = typeof localStorage !== 'undefined'
 
 const initialLocale = savedLanguage.replace(/^"|"$/g, '')
 
+function ruPluralRule(choice: number): number {
+  const mod100 = choice % 100
+  if (mod100 >= 11 && mod100 <= 19) {
+    return 2
+  }
+
+  const mod10 = choice % 10
+  if (mod10 === 1) {
+    return 0
+  }
+
+  if (mod10 >= 2 && mod10 <= 4) {
+    return 1
+  }
+
+  return 2
+}
+
 export const i18n = createI18n({
   legacy: false,
   locale: initialLocale,
@@ -15,6 +33,9 @@ export const i18n = createI18n({
   messages: {
     ru,
     en,
+  },
+  pluralRules: {
+    ru: ruPluralRule,
   },
 })
 

@@ -181,6 +181,35 @@ function navigateTo(path: string) {
         </div>
       </article>
 
+      <!-- Editor Card -->
+      <article
+        class="section-card card-editor"
+        role="button"
+        tabindex="0"
+        @click="navigateTo(`/${currentMapName}/editor`)"
+        @keydown.enter="navigateTo(`/${currentMapName}/editor`)"
+      >
+        <div class="card-glow" />
+        <div class="card-header">
+          <div class="card-icon-wrapper icon-editor">
+            <Icon icon="mdi:pencil-ruler" />
+          </div>
+          <span class="card-badge">{{ t('home.sections.editor.badge') }}</span>
+        </div>
+        <div class="card-body">
+          <h2 class="card-title">
+            {{ t('home.sections.editor.title') }}
+          </h2>
+          <p class="card-desc">
+            {{ t('home.sections.editor.desc') }}
+          </p>
+        </div>
+        <div class="card-footer">
+          <span class="card-action-text">{{ t('home.sections.editor.action') }}</span>
+          <Icon icon="mdi:arrow-right" class="card-arrow-icon" />
+        </div>
+      </article>
+
       <!-- FAQ Card -->
       <article
         class="section-card card-faq"
@@ -498,6 +527,11 @@ function navigateTo(path: string) {
   &.icon-records {
     color: #fbbf24;
     background-color: rgba(251, 191, 36, 0.12);
+  }
+
+  &.icon-editor {
+    color: #e879f9;
+    background-color: rgba(232, 121, 249, 0.12);
   }
 
   &.icon-faq {
